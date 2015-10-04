@@ -64,6 +64,16 @@ router.put('/stock/:id', function (req, res ,next){
 });
 
 //ROUTE 5 DELETE
+router.delete('/stock/:id', function(req, res, next) {
+  Stock.findByIdAndRemoveQ(req.params.id)
+  .then(function (result) {
+                        res.json({"REMOVED" : result});
+                          })
+   .catch(function (err) {res.send(err) })
+   .done();
+});
+
+
 module.exports = router;
 
 

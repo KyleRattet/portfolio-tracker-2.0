@@ -143,4 +143,29 @@ describe('Projects', function() {
     });
   });
 
+//5. DELETE TEST
+  it('should delete a SINGLE stock on /stock/<id> DELETE', function(done) {
+  chai.request(server)
+    .get('/api/v1/stocks')
+    .end(function(err, res){
+      chai.request(server)
+        .delete('/api/v1/stock/'+res.body[0]._id)
+        .end(function(error, response){
+          console.log(response.body)
+          response.should.have.status(200);
+          response.should.be.json;
+          response.body.should.be.a('object');
+          response.body.should.have.property('REMOVED');
+          response.body.REMOVED.should.be.a('object');
+          response.body.REMOVED.should.have.property('name');
+          response.body.REMOVED.should.have.property('_id');
+          response.body.REMOVED.name.should.equal('Apple Inc.');
+          response.body.REMOVED.ticker.should.equal('AAPL');
+          response.body.REMOVED.shares.should.equal(100);
+          done();
+      });
+    });
+
+  });
+
 });
