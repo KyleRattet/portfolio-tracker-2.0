@@ -15,5 +15,12 @@ router.get('/stocks', function(req, res, next) {
     .done();
 });
 
+//ROUTE 2 GET ONE Stock
+router.get('/stock/:id', function(req, res, next) {
+  Stock.findByIdQ(req.params.id)
+  .then(function (result) { res.json(result) })
+  .catch(function (err) {res.send(err) })
+  .done();
+});
 
 module.exports = router;
