@@ -44,6 +44,35 @@ router.post('/stocks', function (req, res, next) {
 });
 
 //ROUTE 4 PUT to Update
+router.put('/stock/:id', function (req, res ,next){
+  var update = {
+    name: req.body.name,
+    ticker: req.body.ticker,
+    side: req.body.side,
+    shares: req.body.shares,
+    costBasis: req.body.costBasis,
+    date: req.body.date
+  };
+  var options = {new:true};
+  Stock.findByIdAndUpdateQ(req.params.id, update, options)
+  .then(function (result) {
+    res.json({"UPDATED": result});
+    })
+  .catch(function (err) {
+    res.send(err);
+    });
+});
 
 //ROUTE 5 DELETE
 module.exports = router;
+
+
+
+
+
+
+
+
+
+
+

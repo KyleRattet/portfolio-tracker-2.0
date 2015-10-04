@@ -112,4 +112,35 @@ describe('Projects', function() {
     });
   });
 
+//4. PUT Test
+  it("should update a single stock on /stock PUT", function(done){
+  chai.request(server)
+    .get('/api/v1/stocks')
+    .end(function(err, res){
+      chai.request(server)
+        .put('/api/v1/stock/'+res.body[0]._id)
+        .send({
+          'name': 'Google Inc.',
+          'ticker': "GOOGL",
+          'side': 'sell',
+          'shares': 200,
+          'costBasis': 670,
+          'date': "October 3rd, 2015"
+          })
+        .end(function(error, response){
+          response.should.have.status(200);
+          response.should.be.json;
+          response.body.should.be.a('object');
+          response.body.should.have.property('UPDATED');
+          response.body.UPDATED.should.be.a('object');
+          response.body.UPDATED.should.have.property('name');
+          response.body.UPDATED.should.have.property('_id');
+          response.body.UPDATED.name.should.equal('Google Inc.');
+          response.body.UPDATED.shares.should.equal(200);
+          response.body.UPDATED.costBasis.should.equal(670);
+          done();
+      });
+    });
+  });
+
 });
