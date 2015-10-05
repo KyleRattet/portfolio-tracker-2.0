@@ -1,8 +1,9 @@
-app.controller('MainController', ['$scope', '$http', function($scope, $http) {
+app.controller('MainController', ['$scope', '$http', 'httpFactory', function($scope, $http, httpFactory) {
 
-  $scope.test = "testing controller";
+  $scope.portfolio = [];
 
-  $scope.getStock = function () {
+  //api call to get stock quote
+  $scope.getQuote = function () {
     console.log($scope.symbol);
     var stock = $http.get("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22"+$scope.symbol+"%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=")
     .then(function(data) {
@@ -11,5 +12,22 @@ app.controller('MainController', ['$scope', '$http', function($scope, $http) {
     });
 
    };
+
+   //get stock from portfolio, api call to my database
+   getStocks = function (url) {
+    httpFactory.get(url)
+    .then(function(response){
+      $scope.portfolio = response.data;
+    });
+   };
+
+   getStocks('api/v1/stocks');
+   console.log(getStocks('api/v1/stocks'));
+   //add stock
+  $scope.addStock = function () {
+    console.log('test add button');
+    $scope.portfolio.push({'name': 'test', 'ticker': 'ABCD'});
+
+  };
 
 }]);

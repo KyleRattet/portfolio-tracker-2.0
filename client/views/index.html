@@ -17,17 +17,18 @@
       <label  for="exampleInputEmail1">Stock Ticker: </label>
       <input ng-model="symbol"type="text" class="form-control" size="5" placeholder="Ticker">
     </div>
-    <button type="submit" ng-click="getStock()" class="btn btn-info">Get Quote</button>
+    <button type="submit" ng-click="getQuote()" class="btn btn-info">Get Quote</button>
   </form>
 
 
 
   </div>
   <hr>
+
 <!-- quote render section -->
 
-  <div class="quote-render">
-    <div class="row">
+  <div class="row quote-render">
+
 
 
     <div class="row">
@@ -55,18 +56,41 @@
       <div class="col-xs-4"><strong>Price/Sales:</strong> {{stockData.PriceSales}}</div>
     </div>
     <div class="row">
-      <div class="col-xs-4"><strong>P/E:</strong> {{stockData.PERatio}}</div>
-      <div class="col-xs-4"><strong>PEG:</strong> {{stockData.PEGRatio}}</div>
-      <div class="col-xs-4"><strong>Price/Sales:</strong> {{stockData.PriceSales}}</div>
-    </div>
-    <div class="row">
       <div class="col-xs-4"><strong>EPS Est. Current Yr.:</strong> {{stockData.EPSEstimateCurrentYear}}</div>
       <div class="col-xs-4"><strong>EPS Est. Next Yr.:</strong> {{stockData.EPSEstimateNextYear}}</div>
       <div class="col-xs-4"><strong>1 Yr. Price Target:</strong> {{stockData.OneyrTargetPrice}}</div>
     </div>
 
+  </div>
 
-    </div>
+  <hr>
+
+<!-- add stock, transaction form -->
+  <div class="row add-form">
+
+    <form>
+      <div class="col-xs-2 form-group">
+        <label>Symbol</label>
+        <input type="text" class="form-control" id="symbol" value="{{stockData.Symbol}}">
+      </div>
+      <div class="col-xs-2 form-group">
+        <label>Price</label>
+        <input type="text" class="form-control" id="price" value="{{stockData.LastTradePriceOnly | currency}}">
+      </div>
+      <div class="col-xs-2 form-group">
+        <label>Type</label>
+        <select class="form-control">
+          <option>Buy</option>
+          <option>Sell</option>
+        </select>
+      </div>
+      <div class="col-xs-2 form-group">
+        <label>Share Amount</label>
+        <input type="number" class="form-control" id="shares" ng-model="shareAmount" placeholder="Quantity">
+      </div>
+      <button type="submit" ng-click="addStock()" class="btn btn-success">Add Stock</button>
+    </form>
+
 
   </div>
 
