@@ -71,27 +71,52 @@
     <form>
       <div class="col-xs-2 form-group">
         <label>Symbol</label>
-        <input type="text" class="form-control" id="symbol" value="{{stockData.Symbol}}">
+        <input type="text" class="form-control" id="symbol" ng-model="stock.name" value="{{stockData.Symbol}}">
       </div>
       <div class="col-xs-2 form-group">
         <label>Price</label>
-        <input type="text" class="form-control" id="price" value="{{stockData.LastTradePriceOnly | currency}}">
+        <input type="text" class="form-control" id="price" value="{{stockData.LastTradePriceOnly | currency}}" ng-model="stock.costBasis">
       </div>
       <div class="col-xs-2 form-group">
         <label>Type</label>
-        <select class="form-control">
+        <select class="form-control" ng-model="stock.side">
           <option>Buy</option>
           <option>Sell</option>
         </select>
       </div>
       <div class="col-xs-2 form-group">
         <label>Share Amount</label>
-        <input type="number" class="form-control" id="shares" ng-model="shareAmount" placeholder="Quantity">
+        <input type="number" class="form-control" id="shares" ng-model="stock.shares" placeholder="Quantity">
       </div>
       <button type="submit" ng-click="addStock()" class="btn btn-success">Add Stock</button>
     </form>
 
 
+  </div>
+
+<!--render portfolio holdings -->
+
+  <div class="bs-example" data-example-id="hoverable-table">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Stock</th>
+          <th>Position</th>
+          <th>Cost Basis</th>
+          <th>Long/Short</th>
+          <th>Transaction Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="stock in portfolio">
+          <td>{{stock.name}}</td>
+          <td>{{stock.costBasis}}</td>
+          <td>{{stock.shares}}</td>
+          <td>{{stock.side}}</td>
+          <td>{{stock.date | date: format : 'medium'}}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
   </div>

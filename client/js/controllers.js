@@ -25,9 +25,17 @@ app.controller('MainController', ['$scope', '$http', 'httpFactory', function($sc
    console.log(getStocks('api/v1/stocks'));
    //add stock
   $scope.addStock = function () {
-    console.log('test add button');
-    $scope.portfolio.push({'name': 'test', 'ticker': 'ABCD'});
-
+    $scope.stock.date = new Date();
+    var payload = $scope.stock;
+    console.log(payload);
+    httpFactory.post('api/v1/stocks', payload)
+    .then(function(response) {
+      $scope.portfolio.push(response.data);
+      console.log($scope.portfolio);
+      getStocks('api/v1/stocks');
+    });
   };
+
+
 
 }]);
