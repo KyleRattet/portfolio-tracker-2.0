@@ -3,92 +3,122 @@ app.controller('MainController', ['$scope', '$http', 'httpFactory', function($sc
   $scope.portfolio = [];
 
      //get stock from portfolio, api call to my database
-   getStocks = function (url) {
-    httpFactory.get(url)
-    .then(function(response){
-      $scope.portfolio = response.data;
-      console.log($scope.portfolio);
+     getStocks = function (url) {
+      httpFactory.get(url)
+      .then(function(response){
+        $scope.portfolio = response.data;
+        console.log($scope.portfolio);
       // for(i=0; i < response; i++){
-      //   $scope.portfolio.push(getQuote(response[i])
+      //   $scope.portfolio.push(getQuote(response[i]))
       // }
 
     });
-   };
+    };
 
-   getStocks('api/v1/stocks');
+    getStocks('api/v1/stocks');
 
 
-  $scope.totalExposure = function() {
-    var total = 0;
-    for (var i = 0; i < $scope.portfolio.length; i++) {
-      var stock = $scope.portfolio[i];
-      total += (stock.costBasis * stock.shares);
-    }
-    return total;
-  };
+    $scope.totalExposure = function() {
+      var total = 0;
+      for (var i = 0; i < $scope.portfolio.length; i++) {
+        var stock = $scope.portfolio[i];
+        total += (stock.costBasis * stock.shares);
+      }
+      return total;
+    };
 
 
 
   //api call to get stock quote
   $scope.getQuote = function (symbol) {
-    console.log($scope.symbol);
     var stock = $http.get("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22"+symbol+"%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=")
     .then(function(data) {
-      console.log(data);
       $scope.stockData = data.data.query.results.quote;
     });
 
-   };
+  };
 
 
-   $scope.editStock = function (id) {
-    console.log('testing edit');
-    stockURL = "api/v1/stock/"+ id;
+  $scope.editStock = function (id) {
+    var stockURL = "api/v1/stock/"+ id;
     httpFactory.get(stockURL)
     .then(function(response) {
-
       $scope.stock = response.data;
-      console.log($scope.stock, "stock edit response");
     });
   };
 
-  $scope.updateStock = function () {
-     var update = $scope.stock;
+  $scope.updateStock = function (id, updatedStock) {
+    var update = updatedStock;
+    var stockURL = "api/v1/stock/"+ id;
     httpFactory.put(stockURL, update)
     .then(function(response){
-
       getStocks('api/v1/stocks');
-      $scope.project = {};
+      $scope.stock = {};
     });
   };
 
 
+  $scope.deleteStock = function (id) {
+    stockURL = "api/v1/stock/"+ id;
+    httpFactory.delete(stockURL)
+    .then(function(response) {
+      getStocks('api/v1/stocks');
+    });
+  };
 
-  //   $scope.updateLast = function () {
+  $scope.updateLast = function () {
+    $scope.portfolio.forEach(function(obj){
+      var symbol = obj.ticker;
+      var url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22"+symbol+"%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
+      $http.get(url).then(function(data) {
+        var lastTradePrice = data.data.query.results.quote.LastTradePriceOnly;
+        // console.log(lastTradePrice, "last trade price");
+        obj.last = lastTradePrice;
+        $scope.updateStock(obj._id, obj);
+      });
+    });
+
+    // console.log($scope.portfolio);
+
+    // for (var i = 0; i < $scope.portfolio.length; i++) {
+    //   //get request
+    //   var symbol = $scope.portfolio[i].ticker;
+    //   //get request
+    //   $http.get("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22"+symbol+"%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=")
+    //   .then(function(data) {
+    //     var lastTradePrice = data.data.query.results.quote.LastTradePriceOnly;
+    //     console.log(lastTradePrice, "last trade price");
+    //     newPrices.push(lastTradePrice)
+    //   });
+    //   console.log(newPrices)
+    //   // put request to update objects in portfolio
+    //   // var stockURL = "api/v1/stock/"+ $scope.portfolio[i].id;
+    //   // var update = {
+    //   //       ticker: $scope.portfolio[i].ticker,
+    //   //       side: $scope.portfolio[i].side,
+    //   //       shares: $scope.portfolio[i].shares,
+    //   //       last: lastTradePrice,
+    //   //       costBasis: $scope.portfolio[i].costBasis,
+    //   //       date: $scope.portfolio[i].date
+    //   //       } ;
+    //   // httpFactory.put(stockURL, update)
+    //   // .then(function(response){
+    //   //   getStocks('api/v1/stocks');
+    //   //   // $scope.stock = {};
+    //   // });
 
 
-  //   for (var i = 0; i < $scope.portfolio.length; i++) {
-  //       var stock = $http.get("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22"+$scope.portfolio[i].ticker+"%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=")
-  //   .then(function(data) {
-  //     console.log(data);
-  //     $scope.lastPrice[i] = data.data.query.results.quote.LastTradePriceOnly;
-  //     console.log($scope.lastPrice[i], "scope last price");
-  //     $scope.portfolio[0].last = $scope.lastPrice[i];
-  //     console.log($scope.portfolio[0].last);
-  //   });
+    // }
 
-  //   };
-  // };
+    // return $scope.portfolio;
+
+    // getStocks('api/v1/stocks');
+  };
+
 
 
 
   $scope.addStock = function (symbol) {
-
-    //  var stock = $http.get("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22"+symbol+"%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=")
-    // .then(function(data) {
-    //   console.log(data);
-    //   $scope.last = data.data.query.results.quote.LastTradePriceOnly;
-    // });
 
     var newStock = {
       ticker: $scope.stockData.Symbol,
@@ -107,7 +137,6 @@ app.controller('MainController', ['$scope', '$http', 'httpFactory', function($sc
 
   };
 
-  $scope.lastPrice = [];
 
 
 

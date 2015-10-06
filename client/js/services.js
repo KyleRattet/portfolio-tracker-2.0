@@ -13,9 +13,9 @@ app.factory('httpFactory', ['$http', function($http) {
   };
 
   // //3. Delete request
-  // obj.delete = function (url) {
-  //   return $http.delete(url);
-  // };
+  obj.delete = function (url) {
+    return $http.delete(url);
+  };
 
   // //4. Put request
   obj.put = function(url, payload) {

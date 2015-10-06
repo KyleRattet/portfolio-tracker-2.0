@@ -46,6 +46,7 @@ router.post('/stocks', function (req, res, next) {
 
 //ROUTE 4 PUT to Update
 router.put('/stock/:id', function (req, res ,next){
+  console.log(req.body.id);
   var update = {
     name: req.body.name,
     ticker: req.body.ticker,
@@ -62,7 +63,7 @@ router.put('/stock/:id', function (req, res ,next){
     })
   .catch(function (err) {
     res.send(err);
-    });
+  });
 });
 
 //ROUTE 5 DELETE
