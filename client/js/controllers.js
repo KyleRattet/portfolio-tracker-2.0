@@ -7,27 +7,29 @@ app.controller('MainController', ['$scope', '$http', 'httpFactory', function($sc
       httpFactory.get(url)
       .then(function(response){
         $scope.portfolio = response.data;
-        console.log($scope.portfolio);
-      // for(i=0; i < response; i++){
-      //   $scope.portfolio.push(getQuote(response[i]))
-      // }
-
-    });
+      });
     };
 
     getStocks('api/v1/stocks');
 
 
-    $scope.totalExposure = function() {
-      var total = 0;
-      for (var i = 0; i < $scope.portfolio.length; i++) {
-        var stock = $scope.portfolio[i];
-        total += (stock.costBasis * stock.shares);
-      }
-      return total;
-    };
+  $scope.initialValue = function() {
+    var total = 0;
+    for (var i = 0; i < $scope.portfolio.length; i++) {
+      var stock = $scope.portfolio[i];
+      total += (stock.costBasis * stock.shares);
+    }
+    return total;
+  };
 
-
+  $scope.portfolioMarketValue = function() {
+    var total = 0;
+    for (var i = 0; i < $scope.portfolio.length; i++) {
+      var stock = $scope.portfolio[i];
+      total += (stock.last * stock.shares);
+    }
+    return total;
+  };
 
   //api call to get stock quote
   $scope.getQuote = function (symbol) {
@@ -37,7 +39,6 @@ app.controller('MainController', ['$scope', '$http', 'httpFactory', function($sc
     });
 
   };
-
 
   $scope.editStock = function (id) {
     var stockURL = "api/v1/stock/"+ id;
@@ -57,7 +58,6 @@ app.controller('MainController', ['$scope', '$http', 'httpFactory', function($sc
     });
   };
 
-
   $scope.deleteStock = function (id) {
     stockURL = "api/v1/stock/"+ id;
     httpFactory.delete(stockURL)
@@ -72,7 +72,6 @@ app.controller('MainController', ['$scope', '$http', 'httpFactory', function($sc
       var url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22"+symbol+"%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
       $http.get(url).then(function(data) {
         var lastTradePrice = data.data.query.results.quote.LastTradePriceOnly;
-        // console.log(lastTradePrice, "last trade price");
         obj.last = lastTradePrice;
         $scope.updateStock(obj._id, obj);
       });

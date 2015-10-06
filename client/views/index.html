@@ -154,7 +154,11 @@
     </table>
   </div>
 
-      <p>Total Exposure: {{ totalExposure() | currency }}</p>
+      <p>Cost Basis: {{ initialValue() | currency }}</p>
+      <p>Porftfolio Market Value: {{ portfolioMarketValue() | currency }}</p>
+      <p>Percent Performance: {{(portfolioMarketValue()/initialValue()-1)*100 | number:1}}%</p>
+      <p>Nominal Performance: {{portfolioMarketValue() - initialValue() | currency}}</p>
+
 
 
 
