@@ -7,7 +7,8 @@ var Stock = new Schema ({
   side: String,
   shares: Number,
   costBasis: Number,
-  date: String
+  date: String,
+  last: Number
 });
 
 
