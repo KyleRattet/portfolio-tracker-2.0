@@ -6,7 +6,7 @@ app.controller('MainController', ['$scope', '$http', 'httpFactory', function($sc
    getStocks = function (url) {
     httpFactory.get(url)
     .then(function(response){
-       $scope.portfolio = response.data;
+      $scope.portfolio = response.data;
       console.log($scope.portfolio);
       // for(i=0; i < response; i++){
       //   $scope.portfolio.push(getQuote(response[i])
@@ -16,17 +16,6 @@ app.controller('MainController', ['$scope', '$http', 'httpFactory', function($sc
    };
 
    getStocks('api/v1/stocks');
-
-    //add to portfolio
-  // function addLast () {
-  //   for (var i = 0; i < $scope.portfolio.length; i++) {
-  //     $scope.portfolio[i].last = "testing";
-  //   };
-  // }
-
-  // addLast();
-  // console.log($scope.portfolio);
-
 
 
   $scope.totalExposure = function() {
@@ -52,6 +41,27 @@ app.controller('MainController', ['$scope', '$http', 'httpFactory', function($sc
    };
 
 
+   $scope.editStock = function (id) {
+    console.log('testing edit');
+    stockURL = "api/v1/stock/"+ id;
+    httpFactory.get(stockURL)
+    .then(function(response) {
+
+      $scope.stock = response.data;
+      console.log($scope.stock, "stock edit response");
+    });
+  };
+
+  $scope.updateStock = function () {
+     var update = $scope.stock;
+    httpFactory.put(stockURL, update)
+    .then(function(response){
+
+      getStocks('api/v1/stocks');
+      $scope.project = {};
+    });
+  };
+
 
 
   //   $scope.updateLast = function () {
@@ -73,7 +83,13 @@ app.controller('MainController', ['$scope', '$http', 'httpFactory', function($sc
 
 
   $scope.addStock = function (symbol) {
-    // $scope.updateLast($scope.stockData.Symbol);
+
+    //  var stock = $http.get("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22"+symbol+"%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=")
+    // .then(function(data) {
+    //   console.log(data);
+    //   $scope.last = data.data.query.results.quote.LastTradePriceOnly;
+    // });
+
     var newStock = {
       ticker: $scope.stockData.Symbol,
       side: $scope.side,

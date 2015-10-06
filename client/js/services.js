@@ -18,9 +18,9 @@ app.factory('httpFactory', ['$http', function($http) {
   // };
 
   // //4. Put request
-  // obj.put = function(url, payload) {
-  //   return $http.put(url, payload);
-  // };
+  obj.put = function(url, payload) {
+    return $http.put(url, payload);
+  };
 
   return obj;
 }]);
