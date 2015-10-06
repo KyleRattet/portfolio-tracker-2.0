@@ -6,23 +6,26 @@ app.controller('MainController', ['$scope', '$http', 'httpFactory', function($sc
    getStocks = function (url) {
     httpFactory.get(url)
     .then(function(response){
-      $scope.portfolio = response.data;
+       $scope.portfolio = response.data;
       console.log($scope.portfolio);
+      // for(i=0; i < response; i++){
+      //   $scope.portfolio.push(getQuote(response[i])
+      // }
+
     });
    };
 
    getStocks('api/v1/stocks');
 
     //add to portfolio
-  function addLast () {
-    for (var i = 0; i < $scope.portfolio.length; i++) {
-      $scope.portfolio[i].last = "testing";
-    };
-    return $scope.portfolio;
-  }
+  // function addLast () {
+  //   for (var i = 0; i < $scope.portfolio.length; i++) {
+  //     $scope.portfolio[i].last = "testing";
+  //   };
+  // }
 
-  addLast();
-  console.log($scope.portfolio);
+  // addLast();
+  // console.log($scope.portfolio);
 
 
 
@@ -49,26 +52,28 @@ app.controller('MainController', ['$scope', '$http', 'httpFactory', function($sc
    };
 
 
-   //add stock
-  // $scope.addStock = function () {
-  //   $scope.stock.last = "last test";
-  //   $scope.stock.date = new Date();
-  //   var payload = $scope.stock;
-  //   console.log(payload, "payload");
-  //   httpFactory.post('api/v1/stocks', payload)
-  //   .then(function(response) {
-  //     $scope.portfolio.push(response.data);
-  //     console.log($scope.portfolio);
-  //     getStocks('api/v1/stocks');
+
+
+  //   $scope.updateLast = function () {
+
+
+  //   for (var i = 0; i < $scope.portfolio.length; i++) {
+  //       var stock = $http.get("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22"+$scope.portfolio[i].ticker+"%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=")
+  //   .then(function(data) {
+  //     console.log(data);
+  //     $scope.lastPrice[i] = data.data.query.results.quote.LastTradePriceOnly;
+  //     console.log($scope.lastPrice[i], "scope last price");
+  //     $scope.portfolio[0].last = $scope.lastPrice[i];
+  //     console.log($scope.portfolio[0].last);
   //   });
+
+  //   };
   // };
 
 
 
-
-
   $scope.addStock = function (symbol) {
-
+    // $scope.updateLast($scope.stockData.Symbol);
     var newStock = {
       ticker: $scope.stockData.Symbol,
       side: $scope.side,
@@ -81,20 +86,14 @@ app.controller('MainController', ['$scope', '$http', 'httpFactory', function($sc
     .then(function(response) {
       $scope.portfolio.push(response.data);
       getStocks('api/v1/stocks');
+
     });
 
   };
 
   $scope.lastPrice = [];
 
-  $scope.updateLast = function (symbol) {
-    var stock = $http.get("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22"+symbol+"%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=")
-    .then(function(data) {
-      console.log(data);
-      $scope.last = data.data.query.results.quote.LastTradePriceOnly;
-      $scope.portfolio.push($scope.last);
-    });
-  };
+
 
 
 

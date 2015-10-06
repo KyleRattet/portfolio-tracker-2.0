@@ -31,6 +31,7 @@ router.post('/stocks', function (req, res, next) {
     side: req.body.side,
     shares: req.body.shares,
     costBasis: req.body.costBasis,
+    last: req.body.last,
     date: req.body.date
   });
   newStock.saveQ()
