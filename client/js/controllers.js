@@ -2,15 +2,15 @@ app.controller('MainController', ['$scope', '$http', 'httpFactory', function($sc
 
   $scope.portfolio = [];
 
-     //get stock from portfolio, api call to my database
-     getStocks = function (url) {
-      httpFactory.get(url)
-      .then(function(response){
-        $scope.portfolio = response.data;
-      });
-    };
+   //get stock from portfolio, api call to my database
+  getStocks = function (url) {
+    httpFactory.get(url)
+    .then(function(response){
+      $scope.portfolio = response.data;
+    });
+  };
 
-    getStocks('api/v1/stocks');
+  getStocks('api/v1/stocks');
 
 
   $scope.initialValue = function() {
@@ -136,8 +136,24 @@ app.controller('MainController', ['$scope', '$http', 'httpFactory', function($sc
 
   };
 
+  $scope.xAxisTickFormatFunction = function(){
+  return function(date){
+    return d3.time.format('%x')(new Date(date));
+  };
+};
+
+  //epoch time
+  function getTime () {
+    var time = Math.round(new Date().getTime());
+    return time;
+  }
 
 
+  $scope.exampleData = [
+                {
+                    "key": "Series 1",
+                    "values": [ [ 1443666958000 , 0] , [ 1443753358000 , 6.3382185140371] , [ 1443839758000 , 9.9507873460847] , [  1443926158000 , 11.569146943813] , [ 1444186007379 , 15.4767332317425]]
+                }];
 
 
 
