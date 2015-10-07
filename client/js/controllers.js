@@ -1,6 +1,7 @@
 app.controller('MainController', ['$scope', '$http', 'httpFactory', function($scope, $http, httpFactory) {
 
   $scope.portfolio = [];
+  $scope.portfolioDBValue = [];
 
    //get stock from portfolio, api call to my database
   getStocks = function (url) {
@@ -160,6 +161,28 @@ app.controller('MainController', ['$scope', '$http', 'httpFactory', function($sc
                     "values": [ [ 1443666958000 , 0] , [ 1443753358000 , 6.3382185140371] , [ 1443839758000 , 9.9507873460847] , [  1443926158000 , 11.569146943813] , [ 1444186007379 , 15.4767332317425]]
                 }];
 
+/////portfolio section
+  getPortfolio = function (url) {
+    httpFactory.get(url)
+    .then(function(response){
+      $scope.portfolioDBValue = response.data;
+    });
+  };
 
+  getPortfolio('chart/portfolio');
+
+  $scope.updatePortfolio = function () {
+    var newPortfolio = {
+      value: $scope.portfolioMarketValue(),
+      date: getTime(),
+    };
+    httpFactory.post('chart/portfolio', newPortfolio)
+    .then(function(response) {
+      $scope.portfolioDBValue.push(response.data);
+      getPortfolio('chart/portfolio');
+      console.log($scope.portfolioDBValue, "portfolio value from the database");
+
+    });
+  };
 
 }]);
