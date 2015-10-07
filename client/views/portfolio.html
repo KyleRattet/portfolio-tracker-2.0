@@ -1,0 +1,109 @@
+   <div ng-show="edit" class="row edit-form">
+
+    <form>
+      <div class="col-xs-2 form-group">
+        <label>Symbol</label>
+        <input type="text" class="form-control" id="symbol" ng-model="stock.ticker">
+      </div>
+      <div class="col-xs-2 form-group">
+        <label>Price</label>
+        <input type="text" class="form-control" id="price" ng-model="stock.costBasis">
+      </div>
+      <div class="col-xs-2 form-group">
+        <label>Type</label>
+        <select class="form-control" ng-model="stock.side">
+          <option>Buy</option>
+          <option>Sell</option>
+        </select>
+      </div>
+      <div class="col-xs-2 form-group">
+        <label>Share Amount</label>
+        <input type="number" class="form-control" id="shares" ng-model="stock.shares" placeholder="Quantity">
+      </div>
+      <button type="submit" ng-click="updateStock(stock._id, stock)" class="btn btn-success">Edit Stock</button>
+    </form>
+
+  </div>
+
+<label>Filter Positions:</label>
+  <input ng-model="searchText">
+  <span><strong>Sort Portfolio: </strong><select class="form-inline" ng-model="sort">
+    <option value='ticker'>Stock</option>
+    <option value='shares'>Position</option>
+    <option value='costBasis'>Cost Basis</option>
+    <option value='last'>Last</option>
+    <option value='initial'>Initial Value</option>
+    <option value='marketValue'>Market Value</option>
+    <option value='dollarPerformance'>$ Performance</option>
+    <option value='percentPerformance'>% Performance</option>
+    <option value='side'>Long/Short</option>
+    <option value='date'>Transaction Date</option>
+  </select>
+  <div class="bs-example" data-example-id="hoverable-table">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Stock</th>
+          <th>Position</th>
+          <th>Cost Basis</th>
+          <th>Last</th>
+          <th>Initial Value</th>
+          <th>Market Value</th>
+          <th>$ Performance</th>
+          <th>% Performance</th>
+          <th>Long/Short</th>
+          <th>Transaction Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="stock in portfolio | filter: searchText | orderBy : sort">
+          <td>{{stock.ticker}}</td>
+          <td>{{stock.shares}}</td>
+          <td>{{stock.costBasis | currency}}</td>
+          <td>{{stock.last | currency}}</td>
+          <td>{{stock.costBasis * stock.shares | currency}}</td>
+          <td>{{stock.last * stock.shares | currency}}</td>
+          <td><span ng-class="{'positive': stock.last * stock.shares - stock.costBasis * stock.shares > 0, 'negative':stock.last * stock.shares - stock.costBasis * stock.shares < 0}">{{stock.last * stock.shares - stock.costBasis * stock.shares | currency}}</span></td>
+          <td><span ng-class="{'positive':((stock.last * stock.shares)/(stock.costBasis * stock.shares)-1)*100 > 0, 'negative':((stock.last * stock.shares)/(stock.costBasis * stock.shares)-1)*100 < 0}">{{((stock.last * stock.shares)/(stock.costBasis * stock.shares)-1)*100 | number:1}}%</span></td>
+          <td>{{stock.side | side }}</td>
+          <td>{{stock.date | date: 'M/d/yy h:mm a'}}</td>
+          <td class="text-right">
+          <button ng-hide="name" ng-click="editStock(stock._id)" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></button>
+          <!-- <button ng-show="name" ng-click="updateStock(stock._id, stock)" class="btn btn-danger"><span class="glyphicon glyphicon-update"></span></button> -->
+          <button ng-click="deleteStock(stock._id)" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+      <p>Last Refresh : {{refresh | date : 'MMM d, y h:mm:ss a'}}</p>
+      <p>Cost Basis: {{ initialValue() | currency }}</p>
+      <p>Porftfolio Market Value: {{ portfolioMarketValue() | currency }}</p>
+      <p>Percent Performance: {{(portfolioMarketValue()/initialValue()-1)*100 | number:1}}%</p>
+      <p>Nominal Performance: <span ng-class="{'positive':portfolioMarketValue() - initialValue() > 0, 'negative':portfolioMarketValue() - initialValue() < 0}">{{portfolioMarketValue() - initialValue() | currency}}</span></p>
+
+
+
+
+      <button type="submit" ng-click="updateLast(); updatePortfolio()" class="btn btn-success">Refresh Prices</button>
+
+    <div class="jumbotron">
+
+    <div class="row">
+      <div class="col-sm-6 col-sm-offset-3">
+        <nvd3-line-chart
+          data="portfolioData"
+          xAxisTickFormat="xAxisTickFormatFunction()"
+          height="500"
+          width="800"
+          showXAxis="true"
+          showYAxis="true"
+          isArea="true"
+          useInteractiveGuideLine="true"
+          forcey="[65700,65900]">
+        <svg></svg>
+      </div>
+    </div>
+
+
+    </div>

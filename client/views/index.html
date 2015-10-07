@@ -19,6 +19,9 @@
       <input ng-model="symbol"type="text" class="form-control" size="5" placeholder="Ticker">
     </div>
     <button type="submit" ng-click="getQuote(symbol)" class="btn btn-info">Get Quote</button>
+    <a href="#/portfolio">
+    <button type="submit" ng-click="updateLast(); updatePortfolio()"class="btn btn-info">View Portfolio</button>
+    </a>
   </form>
 
 
@@ -28,7 +31,7 @@
 
 <!-- quote render section -->
 
-  <div class="row quote-render">
+  <div ng-show="quote" class="row quote-render">
 
 
 
@@ -61,13 +64,18 @@
       <div class="col-xs-4"><strong>EPS Est. Next Yr.:</strong> {{stockData.EPSEstimateNextYear}}</div>
       <div class="col-xs-4"><strong>1 Yr. Price Target:</strong> {{stockData.OneyrTargetPrice}}</div>
     </div>
+    <div class="row">
+      <div class="col-xs-4">
+      <button type="submit" ng-click="tradeForm()" class="btn btn-success">Trade</button>
+      </div>
+    </div>
 
   </div>
 
   <hr>
 
 <!-- add stock, transaction form -->
-  <div class="row add-form">
+  <div ng-show="trade" class="row add-form">
 
     <form>
       <div class="col-xs-2 form-group">
@@ -89,13 +97,13 @@
         <label>Share Amount</label>
         <input type="number" class="form-control" id="shares" ng-model="shares" placeholder="Quantity">
       </div>
-      <button type="submit" ng-click="addStock(stockData.Symbol)" class="btn btn-success">Add Stock</button>
+      <button type="submit" ng-click="addStock(stockData.Symbol)" class="btn btn-success">Submit Transaction</button>
     </form>
 
   </div>
 
 <!-- edit stock transaction form -->
-   <div class="row edit-form">
+<!--    <div class="row edit-form">
 
     <form>
       <div class="col-xs-2 form-group">
@@ -120,9 +128,9 @@
       <button type="submit" ng-click="updateStock(stock._id, stock)" class="btn btn-success">Edit Stock</button>
     </form>
 
-  </div>
+  </div> -->
 <!--render portfolio holdings -->
-  <label>Filter Positions:</label>
+<!--   <label>Filter Positions:</label>
   <input ng-model="searchText">
   <span><strong>Sort Portfolio: </strong><select class="form-inline" ng-model="sort">
     <option value='ticker'>Stock</option>
@@ -166,8 +174,8 @@
           <td>{{stock.date | date: 'M/d/yy h:mm a'}}</td>
           <td class="text-right">
           <button ng-hide="name" ng-click="editStock(stock._id)" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></button>
-          <!-- <button ng-show="name" ng-click="updateStock(stock._id, stock)" class="btn btn-danger"><span class="glyphicon glyphicon-update"></span></button> -->
-          <button ng-click="deleteStock(stock._id)" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
+          <!<button ng-show="name" ng-click="updateStock(stock._id, stock)" class="btn btn-danger"><span class="glyphicon glyphicon-update"></span></button> -->
+          <!-- <button ng-click="deleteStock(stock._id)" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
           </td>
         </tr>
       </tbody>
@@ -203,16 +211,19 @@
     </div>
 
 
-    </div>
+    </div> -->
 
     <!-- <button type="submit" ng-click="updatePortfolio()" class="btn btn-success">Update Portfolio</button> -->
 
 
   </div>
 
+    <div ng-view></div>
+
     <script type="text/javascript" src="//code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular-route.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angularjs-nvd3-directives/0.0.7/angularjs-nvd3-directives.min.js"></script>

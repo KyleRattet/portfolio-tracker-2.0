@@ -1,9 +1,11 @@
-app.controller('MainController', ['$scope', '$http', 'httpFactory', function($scope, $http, httpFactory) {
+app.controller('MainController', ['$scope', '$http', 'httpFactory' , function($scope, $http, httpFactory) {
 
   $scope.portfolio = [];
   $scope.chartData =[];
 
-
+  $scope.tradeForm = function () {
+    $scope.trade = true;
+  };
 
    //get stock from portfolio, api call to my database
   getStocks = function (url) {
@@ -36,6 +38,7 @@ app.controller('MainController', ['$scope', '$http', 'httpFactory', function($sc
 
   //api call to get stock quote
   $scope.getQuote = function (symbol) {
+    $scope.quote = true;
     var stock = $http.get("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22"+symbol+"%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=")
     .then(function(data) {
       $scope.stockData = data.data.query.results.quote;
@@ -43,6 +46,7 @@ app.controller('MainController', ['$scope', '$http', 'httpFactory', function($sc
   };
 
   $scope.editStock = function (id) {
+    $scope.edit = true;
     var stockURL = "api/v1/stock/"+ id;
     httpFactory.get(stockURL)
     .then(function(response) {
@@ -156,15 +160,7 @@ app.controller('MainController', ['$scope', '$http', 'httpFactory', function($sc
 
   };
 
-   $scope.exampleData = [
-      { key: "One", y: 5 },
-         { key: "Two", y: 2 },
-        { key: "Three", y: 9 },
-          { key: "Four", y: 7 },
-          { key: "Five", y: 4 },
-         { key: "Six", y: 3 },
-        { key: "Seven", y: 9 }
-     ];
+
 
 
 
