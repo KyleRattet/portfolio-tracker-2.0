@@ -1,7 +1,8 @@
 app.controller('MainController', ['$scope', '$http', 'httpFactory', function($scope, $http, httpFactory) {
 
   $scope.portfolio = [];
-  $scope.portfolioDBValue = [];
+  $scope.chartData =[];
+
 
    //get stock from portfolio, api call to my database
   getStocks = function (url) {
@@ -149,17 +150,23 @@ app.controller('MainController', ['$scope', '$http', 'httpFactory', function($sc
     return time;
   }
 
-  $scope.testData = [
-                {
-                    "key": "Series 1",
-                    "values": [ [ 1443666958000 , 0] ]
-                }];
+  $scope.portfolioDBValue = [];
 
-  $scope.exampleData = [
-                {
-                    "key": "Series 1",
-                    "values": [ [ 1443666958000 , 0] , [ 1443753358000 , 6.3382185140371] , [ 1443839758000 , 9.9507873460847] , [  1443926158000 , 11.569146943813] , [ 1444186007379 , 15.4767332317425]]
-                }];
+  // $scope.testData = [
+  //               {
+  //                   "key": "Series 1",
+  //                   "values": [ [ 1443666958000 , 0], [1443666959000, 2], [$scope.portfolioDBValue[0].date, $scope.portfolioDBValue[0].value ] ]
+  //               }];
+  //  $scope.exampleData = [
+  //               {
+  //                   "key": "Series 1",
+  //                   "values": [ ]
+  //               }];
+
+  // }]);
+
+
+
 
 /////portfolio section
   getPortfolio = function (url) {
@@ -171,7 +178,10 @@ app.controller('MainController', ['$scope', '$http', 'httpFactory', function($sc
 
   getPortfolio('chart/portfolio');
 
+  var valuesArray = [];
+
   $scope.updatePortfolio = function () {
+
     var newPortfolio = {
       value: $scope.portfolioMarketValue(),
       date: getTime(),
@@ -181,8 +191,66 @@ app.controller('MainController', ['$scope', '$http', 'httpFactory', function($sc
       $scope.portfolioDBValue.push(response.data);
       getPortfolio('chart/portfolio');
       console.log($scope.portfolioDBValue, "portfolio value from the database");
+      // console.log($scope.exampleData, "example data");
+
+      for(i=0; i < $scope.portfolioDBValue.length; i++){
+        var new_array = [$scope.portfolioDBValue[i].date, $scope.portfolioDBValue[i].value]
+          $scope.chartData.push(new_array);
+          console.log($scope.chartData)
+      }
+      // var dataPointTest = [$scope.portfolioDBValue[0].date, $scope.portfolioDBValue[0].value];
+      // var dataPointTest2 = [$scope.portfolioDBValue[1].date, $scope.portfolioDBValue[1].value];
+      // var dataPointTest3 = [$scope.portfolioDBValue[2].date, $scope.portfolioDBValue[2].value];
+      // console.log(dataPointTest, "data point test 1");
+      // console.log(dataPointTest2, "data point test 2");
+      // console.log(dataPointTest3, "data point test 3");
+         $scope.exampleData = [
+                {
+                    "key": "Series 1",
+                    "values": $scope.chartData
+                }];
 
     });
+
   };
 
+
+    // $scope.updatePortfolio();
+    // getPortfolio('chart/portfolio');
+    // console.log($scope.portfolioDBValue);
+  //update exampleData function, take values from portfolio to populate example data
+  // function updateChartData () {
+  //   var valuesArray = [];
+
+  //   $scope.portfolioDBValue.forEach(function(obj){
+  //     $scope.updatePortfolio();
+  //     getPortfolio('chart/portfolio');
+  //     console.log($scope.portfolioDBValue);
+  //     var newDataPoint = [obj.date, obj.value];
+  //     valuesArray.push(newDataPoint);
+  //   });
+
+  //   console.log(valuesArray);
+  // }
+
+  // updateChartData();
+
+
+    // var values = [
+    //       [ 1443666958000 , 0] , [ 1443753358000 , 6.3382185140371] , [ 1443839758000 , 9.9507873460847] , [  1443926158000 , 11.569146943813] , [ 1444186007379 , 15.4767332317425]
+    //       ];
+
+   // $scope.exampleData = [
+   //              {
+   //                  "key": "Series 1",
+   //                  "values": $scope.chartData[0]
+   //              }];
+
+   //              console.log($scope.chartData.length)
+
+
+
+
 }]);
+
+
