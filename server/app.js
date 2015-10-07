@@ -11,7 +11,7 @@ var mongoose = require('mongoose');
 // *** routes *** //
 // var routes = require('./routes/index.js');
 var apiRoutes = require('./routes/api.js');
-
+var chartRoutes = require('./routes/chart.js');
 // *** express instance *** //
 var app = express();
 
@@ -49,6 +49,7 @@ app.use(express.static(path.join(__dirname, '../client')));
 // *** main routes *** //
 // app.use('/', routes);
 app.use('/api/v1/', apiRoutes);
+app.use('/chart/', chartRoutes);
 //NEW MAIN ROUTE
 app.use('/', function (req,res) {
   res.sendFile(path.join(__dirname, '../client/views', 'index.html'));

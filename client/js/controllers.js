@@ -148,6 +148,11 @@ app.controller('MainController', ['$scope', '$http', 'httpFactory', function($sc
     return time;
   }
 
+  $scope.testData = [
+                {
+                    "key": "Series 1",
+                    "values": [ [ 1443666958000 , 0] ]
+                }];
 
   $scope.exampleData = [
                 {

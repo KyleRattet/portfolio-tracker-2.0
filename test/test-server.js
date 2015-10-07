@@ -6,14 +6,14 @@ var mongoose = require('mongoose');
 
 var server = require('../server/app');
 var Stock = require('../server/models/stocks');
+var Portfolio = require('../server/models/portfolio');
 
 var should = chai.should();
 chai.use(chaiHttp);
 
 
-//write tests
 
-describe('Projects', function() {
+describe('Stock', function() {
 
 //SETUP HOOKS TO CREATE PURE TESTING ENVIRONMENT
   Stock.collection.drop();
@@ -130,6 +130,7 @@ describe('Projects', function() {
         .end(function(error, response){
           response.should.have.status(200);
           response.should.be.json;
+          console.log(response.body)
           response.body.should.be.a('object');
           response.body.should.have.property('UPDATED');
           response.body.UPDATED.should.be.a('object');
@@ -151,7 +152,6 @@ describe('Projects', function() {
       chai.request(server)
         .delete('/api/v1/stock/'+res.body[0]._id)
         .end(function(error, response){
-          console.log(response.body)
           response.should.have.status(200);
           response.should.be.json;
           response.body.should.be.a('object');
@@ -166,6 +166,63 @@ describe('Projects', function() {
       });
     });
 
+  });
+
+});
+
+describe('Portfolio', function() {
+
+//SETUP HOOKS TO CREATE PURE TESTING ENVIRONMENT
+  Portfolio.collection.drop();
+
+  beforeEach(function(done){
+    var newPortfolio = new Portfolio ({
+      value: 10000,
+      date: 1443753358000,
+    });
+    newPortfolio.save(function(err) {
+      done();
+    });
+  });
+  afterEach(function(done){
+    Portfolio.collection.drop();
+    done();
+  });
+//1. GET Portfolio TEST
+  it('should list portfolio on /portfolio GET request', function(done){
+    chai.request(server)
+    .get('/chart/portfolio')
+    .end(function(err, res) {
+      res.should.have.status(200);
+      res.should.be.json;
+      res.body.should.be.a('array');
+      res.body[0].should.have.property('_id');
+      res.body[0].should.have.property('value');
+      res.body[0].should.have.property('date');
+      res.body[0].value.should.equal(10000);
+      res.body[0].date.should.equal(1443753358000);
+      done();
+    });
+  });
+
+//2. POST Test
+  it('should add a SINGLE portfolio on /portfolio POST', function(done) {
+  chai.request(server)
+    .post('/chart/portfolio')
+    .send({'value': 12500, 'date': 1443753358111})
+    .end(function(err, res){
+      res.should.have.status(200);
+      res.should.be.json;
+      res.body.should.be.a('object');
+      res.body.should.have.property('SUCCESS');
+      res.body.SUCCESS[0].should.be.a('object');
+      console.log(res.body);
+      res.body.SUCCESS[0].should.have.property('value');
+      res.body.SUCCESS[0].should.have.property('date');
+      res.body.SUCCESS[0].value.should.equal(12500);
+      res.body.SUCCESS[0].date.should.equal(1443753358111);
+      done();
+    });
   });
 
 });
