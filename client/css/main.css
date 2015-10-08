@@ -22,7 +22,8 @@ a {
 
 .jumbotron {
   height: 100%;
-  margin-bottom: 0;
+  margin-bottom: 25px;
+  border-radius: 25px;
 }
 
 .quote-render {
@@ -41,3 +42,15 @@ a {
   border-radius: 25px;
   padding: 10px;
 }
+
+.portfolio-holdings {
+  border: thin solid gray;
+  border-radius: 25px;
+  padding: 10px;
+  clear: both;
+}
+
+th {
+  text-align: center;
+}
+
