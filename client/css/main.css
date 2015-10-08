@@ -29,3 +29,15 @@ a {
   border: thin solid gray;
   border-radius: 25px;
 }
+
+.add-form {
+  border: thin solid gray;
+  border-radius: 25px;
+  padding: 10px;
+}
+
+.edit-form {
+  border: thin solid gray;
+  border-radius: 25px;
+  padding: 10px;
+}

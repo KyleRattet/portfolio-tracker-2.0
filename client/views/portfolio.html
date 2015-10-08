@@ -21,10 +21,14 @@
         <label>Share Amount</label>
         <input type="number" class="form-control" id="shares" ng-model="stock.shares" placeholder="Quantity">
       </div>
-      <button type="submit" ng-click="updateStock(stock._id, stock)" class="btn btn-success">Edit Stock</button>
+      <div class="col-xs-2 form-group">
+        <label>Transact</label>
+        <button type="submit" ng-click="updateStock(stock._id, stock)" class="btn btn-success">Submit Transaction</button>
+      </div>
     </form>
 
   </div>
+  <br>
 
 <label>Filter Positions:</label>
   <input ng-model="searchText">

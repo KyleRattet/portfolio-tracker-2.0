@@ -1,18 +1,17 @@
-<div class="row">
+<div class="row text-center">
 
   <form class='col-xs-4 col-xs-offset-4 form-inline' >
     <div class="form-group">
-      <label  for="exampleInputEmail1">Stock Ticker: </label>
+      <label  for="exampleInputEmail1">Enter Stock Symbol: </label>
       <input ng-model="symbol"type="text" class="form-control" size="5" placeholder="Ticker">
     </div>
-    <button type="submit" ng-click="getQuote(symbol)" class="btn btn-info">Get Quote</button>
-   <!--  <a href="#/portfolio">
-    <button type="submit" ng-click="updateLast(); updatePortfolio()"class="btn btn-info">View Portfolio</button>
-    </a> -->
+    <div class="form-group">
+      <button type="submit" ng-click="getQuote(symbol)" class="btn btn-info">Get Quote</button>
+    </div>
+
   </form>
 
-
-  </div>
+</div>
 
   <hr>
 
