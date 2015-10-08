@@ -24,6 +24,7 @@ a {
   height: 100%;
   margin-bottom: 25px;
   border-radius: 25px;
+  background-color: white;
 }
 
 .quote-render {
