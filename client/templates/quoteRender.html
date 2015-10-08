@@ -1,0 +1,42 @@
+<div ng-show="quote" class="row quote-render">
+
+
+
+    <div class="row">
+      <div class="col-xs-4"><strong>Name:</strong> {{stockData.Name}}</div>
+      <div class="col-xs-4"><strong>Symbol:</strong> {{stockData.Symbol}}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-4"><strong>Price:</strong> {{stockData.LastTradePriceOnly}}</div>
+      <div class="col-xs-4"><strong>Change:</strong> {{stockData.Change}}</div>
+      <div class="col-xs-4"><strong>% Change:</strong> {{stockData.ChangeinPercent}}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-4"><strong>Volume:</strong> {{stockData.Volume | number}}</div>
+      <div class="col-xs-4"><strong>Avg. Daily Vol.:</strong> {{stockData.AverageDailyVolume | number}}</div>
+      <div class="col-xs-4"><strong>Mkt. Cap:</strong> {{stockData.MarketCapitalization}}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-4"><strong>Dividend: </strong>{{stockData.DividendShare}}</div>
+      <div class="col-xs-4"><strong>Dividend Yld.:</strong> {{stockData.DividendYield}}</div>
+      <div class="col-xs-4"><strong>Ex-Div Date:</strong> {{stockData.ExDividendDate}}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-4"><strong>P/E:</strong> {{stockData.PERatio}}</div>
+      <div class="col-xs-4"><strong>PEG:</strong> {{stockData.PEGRatio}}</div>
+      <div class="col-xs-4"><strong>Price/Sales:</strong> {{stockData.PriceSales}}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-4"><strong>EPS Est. Current Yr.:</strong> {{stockData.EPSEstimateCurrentYear}}</div>
+      <div class="col-xs-4"><strong>EPS Est. Next Yr.:</strong> {{stockData.EPSEstimateNextYear}}</div>
+      <div class="col-xs-4"><strong>1 Yr. Price Target:</strong> {{stockData.OneyrTargetPrice}}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-4">
+      <button type="submit" ng-click="tradeForm()" class="btn btn-success">Trade</button>
+      </div>
+    </div>
+
+  </div>
+
+  <hr>

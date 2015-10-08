@@ -9,11 +9,18 @@
   </head>
   <body>
 
-    <my-nav-bar></my-nav-bar>
-
   <div ng-controller = "MainController">
 
-  <div class="row">
+    <my-nav-bar></my-nav-bar>
+    <quote-input></quote-input>
+    <quote-render></quote-render>
+    <trade-ticket></trade-ticket>
+
+  </div>
+
+  <div ng-view></div>
+
+<!--   <div class="row">
 
   <form class='col-xs-6 form-inline' >
     <div class="form-group">
@@ -28,12 +35,12 @@
 
 
 
-  </div>
-  <hr>
+  </div> -->
+  <!-- <hr> -->
 
 <!-- quote render section -->
 
-  <div ng-show="quote" class="row quote-render">
+  <!-- <div ng-show="quote" class="row quote-render">
 
 
 
@@ -74,10 +81,10 @@
 
   </div>
 
-  <hr>
+  <hr> -->
 
 <!-- add stock, transaction form -->
-  <div ng-show="trade" class="row add-form">
+<!--   <div ng-show="trade" class="row add-form">
 
     <form>
       <div class="col-xs-2 form-group">
@@ -102,7 +109,7 @@
       <button type="submit" ng-click="addStock(stockData.Symbol)" class="btn btn-success">Submit Transaction</button>
     </form>
 
-  </div>
+  </div> -->
 
 <!-- edit stock transaction form -->
 <!--    <div class="row edit-form">
@@ -218,9 +225,7 @@
     <!-- <button type="submit" ng-click="updatePortfolio()" class="btn btn-success">Update Portfolio</button> -->
 
 
-  </div>
 
-    <div ng-view></div>
 
     <script type="text/javascript" src="//code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>

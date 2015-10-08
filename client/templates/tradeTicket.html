@@ -1,4 +1,4 @@
-  <div class="row add-form">
+  <div ng-show="trade" class="row add-form">
 
     <form>
       <div class="col-xs-2 form-group">
@@ -20,7 +20,9 @@
         <label>Share Amount</label>
         <input type="number" class="form-control" id="shares" ng-model="shares" placeholder="Quantity">
       </div>
+      <a href="#/portfolio">
       <button type="submit" ng-click="addStock(stockData.Symbol)" class="btn btn-success">Submit Transaction</button>
+      </a>
     </form>
 
   </div>

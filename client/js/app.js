@@ -9,9 +9,3 @@ app.config(['$routeProvider', function($routeProvider) {
       });
 }]);
 
-app.directive('myNavBar', function () {
-  return {
-    restrict: 'E',
-    templateUrl: 'nav/nav.html',
-  };
-});
