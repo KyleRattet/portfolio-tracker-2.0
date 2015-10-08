@@ -24,3 +24,8 @@ a {
   height: 100%;
   margin-bottom: 0;
 }
+
+.quote-render {
+  border: thin solid gray;
+  border-radius: 25px;
+}
