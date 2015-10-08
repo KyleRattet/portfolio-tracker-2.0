@@ -9,6 +9,8 @@
   </head>
   <body>
 
+    <my-nav-bar></my-nav-bar>
+
   <div ng-controller = "MainController">
 
   <div class="row">
@@ -45,8 +47,8 @@
       <div class="col-xs-4"><strong>% Change:</strong> {{stockData.ChangeinPercent}}</div>
     </div>
     <div class="row">
-      <div class="col-xs-4"><strong>Volume:</strong> {{stockData.Volume}}</div>
-      <div class="col-xs-4"><strong>Avg. Daily Vol.:</strong> {{stockData.AverageDailyVolume}}</div>
+      <div class="col-xs-4"><strong>Volume:</strong> {{stockData.Volume | number}}</div>
+      <div class="col-xs-4"><strong>Avg. Daily Vol.:</strong> {{stockData.AverageDailyVolume | number}}</div>
       <div class="col-xs-4"><strong>Mkt. Cap:</strong> {{stockData.MarketCapitalization}}</div>
     </div>
     <div class="row">
