@@ -40,6 +40,12 @@ a {
   padding: 10px;
 }
 
+.market-pulse {
+  border: thin solid gray;
+  border-radius: 25px;
+  padding: 10px;
+}
+
 .portfolio-holdings {
   border: thin solid gray;
   border-radius: 25px;

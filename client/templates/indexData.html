@@ -1,5 +1,7 @@
+
 <br><br>
-<h3>Market Pulse</h3>
+<div ng-hide="pulse" class="market-pulse">
+<h3 class="text-center">Market Pulse</h3>
 
 <div class="bs-example" data-example-id="hoverable-table">
     <table class="table table-bordered table-striped text-center">
@@ -42,8 +44,35 @@
           <td>{{indexTNX.DaysRange}}</td>
           <td>{{indexTNX.YearRange}}</td>
         </tr>
-
+        <tr>
+          <td>Crude Oil</td>
+          <td>{{indexOIL.LastTradePriceOnly}}</td>
+          <td><span ng-class="{'positive': indexOIL.Change > 0, 'negative':indexOIL.Change< 0}">{{indexOIL.Change}}</span></td>
+          <td><span ng-class="{'positive': indexOIL.Change > 0, 'negative':indexOIL.Change< 0}">{{indexOIL.ChangeinPercent}}</span></td>
+          <td>{{indexOIL.Open}}</td>
+          <td>{{indexOIL.DaysRange}}</td>
+          <td>{{indexOIL.YearRange}}</td>
+        </tr>
+        <tr>
+          <td>Gold</td>
+          <td>{{indexGold.LastTradePriceOnly}}</td>
+          <td><span ng-class="{'positive': indexGold.Change > 0, 'negative':indexGold.Change< 0}">{{indexGold.Change}}</span></td>
+          <td><span ng-class="{'positive': indexGold.Change > 0, 'negative':indexGold.Change< 0}">{{indexGold.ChangeinPercent}}</span></td>
+          <td>{{indexGold.Open}}</td>
+          <td>{{indexGold.DaysRange}}</td>
+          <td>{{indexGold.YearRange}}</td>
+        </tr>
+        <tr>
+          <td>USD Index</td>
+          <td>{{indexUSD.LastTradePriceOnly}}</td>
+          <td><span ng-class="{'positive': indexUSD.Change > 0, 'negative':indexUSD.Change< 0}">{{indexUSD.Change}}</span></td>
+          <td><span ng-class="{'positive': indexUSD.Change > 0, 'negative':indexUSD.Change< 0}">{{indexUSD.ChangeinPercent}}</span></td>
+          <td>{{indexUSD.Open}}</td>
+          <td>{{indexUSD.DaysRange}}</td>
+          <td>{{indexUSD.YearRange}}</td>
+        </tr>
       </tbody>
     </table>
   </div>
 
+</div>

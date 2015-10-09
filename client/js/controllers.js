@@ -41,6 +41,7 @@ app.controller('MainController', ['$scope', '$http', 'httpFactory' , function($s
   // //api call to get stock quote
   $scope.getQuote = function (symbol) {
     $scope.quote = true;
+    $scope.pulse = true;
     var stock = $http.get("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22"+symbol+"%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=")
     .then(function(data) {
       $scope.stockData = data.data.query.results.quote;
@@ -70,11 +71,39 @@ app.controller('MainController', ['$scope', '$http', 'httpFactory' , function($s
     var stock = $http.get("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22"+symbol+"%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=")
     .then(function(data) {
       $scope.indexTNX = data.data.query.results.quote;
-      console.log($scope.indexTNX);
     });
   };
 
   $scope.getTNX('^TNX');
+
+  $scope.getOIL = function (symbol) {
+    var stock = $http.get("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22"+symbol+"%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=")
+    .then(function(data) {
+      $scope.indexOIL = data.data.query.results.quote;
+    });
+  };
+
+  $scope.getOIL('CLX15.NYM');
+
+  $scope.getGold = function (symbol) {
+    var stock = $http.get("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22"+symbol+"%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=")
+    .then(function(data) {
+      $scope.indexGold = data.data.query.results.quote;
+    });
+  };
+
+  $scope.getGold('GCV15.CMX');
+
+  $scope.getUSD = function (symbol) {
+    var stock = $http.get("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22"+symbol+"%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=")
+    .then(function(data) {
+      $scope.indexUSD = data.data.query.results.quote;
+    });
+  };
+
+  $scope.getUSD('DX-Y.NYB');
+
+
 
   $scope.updateLast = function () {
     $scope.portfolio.forEach(function(obj){
@@ -293,6 +322,10 @@ app.controller('PortfolioController', ['$scope', '$http', 'httpFactory' , functi
       });
     });
   };
+
+  // $scope.updateLast();
+  // $scope.updatePortfolio();
+
 
   }]);
 
