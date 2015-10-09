@@ -1,0 +1,49 @@
+<br><br>
+<h3>Market Pulse</h3>
+
+<div class="bs-example" data-example-id="hoverable-table">
+    <table class="table table-bordered table-striped text-center">
+      <thead >
+        <tr>
+          <th>Index</th>
+          <th>Last</th>
+          <th>Change</th>
+          <th>% Change</th>
+          <th>Open</th>
+          <th>Days Range</th>
+          <th>Year Range</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{indexSPX.Name}}</td>
+          <td>{{indexSPX.LastTradePriceOnly}}</td>
+          <td><span ng-class="{'positive': indexSPX.Change > 0, 'negative':indexSPX.Change< 0}">{{indexSPX.Change}}</span></td>
+          <td><span ng-class="{'positive': indexSPX.Change > 0, 'negative':indexSPX.Change< 0}">{{indexSPX.ChangeinPercent}}</span></td>
+          <td>{{indexSPX.Open}}</td>
+          <td>{{indexSPX.DaysRange}}</td>
+          <td>{{indexSPX.YearRange}}</td>
+        </tr>
+        <tr>
+          <td>{{indexNDAQ.Name}}</td>
+          <td>{{indexNDAQ.LastTradePriceOnly}}</td>
+          <td><span ng-class="{'positive': indexNDAQ.Change > 0, 'negative':indexNDAQ.Change< 0}">{{indexNDAQ.Change}}</span></td>
+          <td><span ng-class="{'positive': indexNDAQ.Change > 0, 'negative':indexNDAQ.Change< 0}">{{indexNDAQ.ChangeinPercent}}</span></td>
+          <td>{{indexNDAQ.Open}}</td>
+          <td>{{indexNDAQ.DaysRange}}</td>
+          <td>{{indexNDAQ.YearRange}}</td>
+        </tr>
+        <tr>
+          <td>10-Year Bond</td>
+          <td>{{indexTNX.LastTradePriceOnly}}</td>
+          <td><span ng-class="{'positive': indexTNX.Change > 0, 'negative':indexTNX.Change< 0}">{{indexTNX.Change}}</span></td>
+          <td><span ng-class="{'positive': indexTNX.Change > 0, 'negative':indexTNX.Change< 0}">{{indexTNX.ChangeinPercent}}</span></td>
+          <td>{{indexTNX.Open}}</td>
+          <td>{{indexTNX.DaysRange}}</td>
+          <td>{{indexTNX.YearRange}}</td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+

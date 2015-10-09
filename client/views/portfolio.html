@@ -49,7 +49,7 @@
       <option value='side'>Long/Short</option>
       <option value='date'>Transaction Date</option>
     </select>
-    <button type="submit" ng-click="updateLast(); updatePortfolio()" class="btn btn-info btn-xs">Refresh Prices</button>
+    <button type="submit" ng-click="updateLast(); updatePortfolio()" class="btn btn-success btn-sm">Refresh Prices</button>
     <span>Last Refresh : {{refresh | date : 'MMM d, y h:mm:ss a'}}</span>
   </div>
   <br>
@@ -105,7 +105,7 @@
       <tbody>
           <td>{{ initialValue() | currency }}</td>
           <td>{{ portfolioMarketValue() | currency }}</td>
-          <td>{{(portfolioMarketValue()/initialValue()-1)*100 | number:1}}%</td>
+          <td><span ng-class="{'positive':portfolioMarketValue() - initialValue() > 0, 'negative':portfolioMarketValue() - initialValue() < 0}">{{(portfolioMarketValue()/initialValue()-1)*100 | number:1}}%</span></td>
           <td><span ng-class="{'positive':portfolioMarketValue() - initialValue() > 0, 'negative':portfolioMarketValue() - initialValue() < 0}">{{portfolioMarketValue() - initialValue() | currency}}</span></td>
         </tr>
       </tbody>

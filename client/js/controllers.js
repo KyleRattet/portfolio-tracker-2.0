@@ -3,6 +3,7 @@ app.controller('MainController', ['$scope', '$http', 'httpFactory' , function($s
   // $scope.portfolio = [];
 
 
+
   //quote controller (renders trade ticket)
   $scope.tradeForm = function () {
     $scope.trade = true;
@@ -46,6 +47,34 @@ app.controller('MainController', ['$scope', '$http', 'httpFactory' , function($s
       console.log($scope.stockData);
     });
   };
+
+  $scope.getSPX = function (symbol) {
+    var stock = $http.get("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22"+symbol+"%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=")
+    .then(function(data) {
+      $scope.indexSPX = data.data.query.results.quote;
+    });
+  };
+
+  $scope.getSPX('^GSPC');
+
+  $scope.getNDAQ = function (symbol) {
+    var stock = $http.get("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22"+symbol+"%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=")
+    .then(function(data) {
+      $scope.indexNDAQ = data.data.query.results.quote;
+    });
+  };
+
+  $scope.getNDAQ('^IXIC');
+
+  $scope.getTNX = function (symbol) {
+    var stock = $http.get("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22"+symbol+"%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=")
+    .then(function(data) {
+      $scope.indexTNX = data.data.query.results.quote;
+      console.log($scope.indexTNX);
+    });
+  };
+
+  $scope.getTNX('^TNX');
 
   $scope.updateLast = function () {
     $scope.portfolio.forEach(function(obj){
@@ -267,3 +296,166 @@ app.controller('PortfolioController', ['$scope', '$http', 'httpFactory' , functi
 
   }]);
 
+//auth
+app.controller('loginController',
+  ['$scope', '$location', 'AuthService',
+  function ($scope, $location, AuthService) {
+
+    console.log(AuthService.getUserStatus());
+
+    $scope.login = function () {
+
+      // initial values
+      $scope.error = false;
+      $scope.disabled = true;
+
+      // call login from service
+      AuthService.login($scope.loginForm.username, $scope.loginForm.password)
+        // handle success
+        .then(function () {
+          $location.path('/');
+          $scope.disabled = false;
+          $scope.loginForm = {};
+        })
+        // handle error
+        .catch(function () {
+          $scope.error = true;
+          $scope.errorMessage = "Invalid username and/or password";
+          $scope.disabled = false;
+          $scope.loginForm = {};
+        });
+
+    };
+
+}]);
+
+app.controller('logoutController',
+  ['$scope', '$location', 'AuthService',
+  function ($scope, $location, AuthService) {
+
+    $scope.logout = function () {
+
+      console.log(AuthService.getUserStatus());
+
+      // call logout from service
+      AuthService.logout()
+        .then(function () {
+          $location.path('/login');
+        });
+
+    };
+
+}]);
+
+app.controller('registerController',
+  ['$scope', '$location', 'AuthService',
+  function ($scope, $location, AuthService) {
+
+    console.log(AuthService.getUserStatus());
+
+    $scope.register = function () {
+
+      // initial values
+      $scope.error = false;
+      $scope.disabled = true;
+
+      // call register from service
+      AuthService.register($scope.registerForm.username, $scope.registerForm.password)
+        // handle success
+        .then(function () {
+          $location.path('/login');
+          $scope.disabled = false;
+          $scope.registerForm = {};
+        })
+        // handle error
+        .catch(function () {
+          $scope.error = true;
+          $scope.errorMessage = "Something went wrong!";
+          $scope.disabled = false;
+          $scope.registerForm = {};
+        });
+
+    };
+
+}]);
+// angular.module('myApp').controller('loginController',
+//   ['$scope', '$location', 'AuthService',
+//   function ($scope, $location, AuthService) {
+
+//     console.log(AuthService.getUserStatus());
+
+//     $scope.login = function () {
+
+//       // initial values
+//       $scope.error = false;
+//       $scope.disabled = true;
+
+//       // call login from service
+//       AuthService.login($scope.loginForm.username, $scope.loginForm.password)
+//         // handle success
+//         .then(function () {
+//           $location.path('/');
+//           $scope.disabled = false;
+//           $scope.loginForm = {};
+//         })
+//         // handle error
+//         .catch(function () {
+//           $scope.error = true;
+//           $scope.errorMessage = "Invalid username and/or password";
+//           $scope.disabled = false;
+//           $scope.loginForm = {};
+//         });
+
+//     };
+
+// }]);
+
+// angular.module('myApp').controller('logoutController',
+//   ['$scope', '$location', 'AuthService',
+//   function ($scope, $location, AuthService) {
+
+//     $scope.logout = function () {
+
+//       console.log(AuthService.getUserStatus());
+
+//       // call logout from service
+//       AuthService.logout()
+//         .then(function () {
+//           $location.path('/login');
+//         });
+
+//     };
+
+// }]);
+
+// angular.module('myApp').controller('registerController',
+//   ['$scope', '$location', 'AuthService',
+//   function ($scope, $location, AuthService) {
+
+//     console.log(AuthService.getUserStatus());
+
+//     $scope.register = function () {
+
+//       // initial values
+//       $scope.error = false;
+//       $scope.disabled = true;
+
+//       // call register from service
+//       AuthService.register($scope.registerForm.username, $scope.registerForm.password)
+//         // handle success
+//         .then(function () {
+//           $location.path('/login');
+//           $scope.disabled = false;
+//           $scope.registerForm = {};
+//         })
+//         // handle error
+//         .catch(function () {
+//           $scope.error = true;
+//           $scope.errorMessage = "Something went wrong!";
+//           $scope.disabled = false;
+//           $scope.registerForm = {};
+//         });
+
+//     };
+
+// }]);

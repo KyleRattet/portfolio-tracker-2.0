@@ -27,3 +27,9 @@ app.directive('tradeTicket', function () {
   };
 });
 
+app.directive('indexData', function () {
+  return {
+    restrict: 'E',
+    templateUrl: 'templates/indexData.html',
+  };
+});

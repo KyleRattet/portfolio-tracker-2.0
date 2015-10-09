@@ -7,9 +7,19 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 // var swig = require('swig');
 var mongoose = require('mongoose');
+var expressSession = require('express-session');
+var hash = require('bcrypt-nodejs');
+var path = require('path');
+var passport = require('passport');
+var localStrategy = require('passport-local' ).Strategy;
 
+// user schema/model
+var User = require('./models/user.js');
 // *** routes *** //
 // var routes = require('./routes/index.js');
+
+
+var routes = require('./routes/api.js');
 var apiRoutes = require('./routes/api.js');
 var chartRoutes = require('./routes/chart.js');
 // *** express instance *** //
@@ -39,17 +49,40 @@ app.set('views', path.join(__dirname, 'views'));
 
 
 // *** config middleware *** //
+// app.use(logger('dev'));
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(cookieParser());
+// app.use(express.static(path.join(__dirname, '../client')));
+
+//auth middleware
+// define middleware
+app.use(express.static(path.join(__dirname, '../client')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, '../client')));
+app.use(require('express-session')({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(express.static(path.join(__dirname, 'public')));
 
+// configure passport
+passport.use(new localStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // *** main routes *** //
 // app.use('/', routes);
 app.use('/api/v1/', apiRoutes);
 app.use('/chart/', chartRoutes);
+
+//auth route
+app.use('/user/', routes);
 //NEW MAIN ROUTE
 app.use('/', function (req,res) {
   res.sendFile(path.join(__dirname, '../client/views/', 'index.html'));
