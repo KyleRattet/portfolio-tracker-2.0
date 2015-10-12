@@ -1,4 +1,4 @@
-var app = angular.module('myApp', ['ngRoute','nvd3ChartDirectives']);
+var app = angular.module('myApp', ['ngRoute','nvd3ChartDirectives', 'ngAnimate']);
 
 
 app.config(['$routeProvider', function($routeProvider) {

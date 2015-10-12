@@ -1,6 +1,6 @@
   <h1 class="text-center"><strong>Portfolio</strong></h1>
-  <hr
-   <div ng-show="edit" class="row edit-form">
+  <hr>
+   <div class="row edit-form" ng-show="edit">
 
     <form>
       <div class="col-xs-2 form-group">
@@ -33,8 +33,8 @@
 
   <div class="portfolio-holdings">
 
-    <h2 class="text-center">Portfolio Holdings</h2>
-
+    <h2 class="text-center">Portfolio Holdings&nbsp;<span><button type="submit" ng-hide="positions" ng-click="updateLast(); updatePortfolio();positions = !positions" class="btn btn-success btn-sm">Expand</button></span><span><button type="submit" ng-show="positions" ng-click="positions = !positions" class="btn btn-success btn-sm">Collapse</button></span></h2>
+  <div ng-show="positions">
   <div class="portfolio-table-label">
     <label>Filter Positions:</label>
     <input ng-model="searchText">
@@ -92,6 +92,7 @@
       </tbody>
     </table>
   </div>
+  </div>
 
     <div class="performance">
     <table class="table table-bordered table-striped text-center">
@@ -118,7 +119,7 @@
   <br>
 
 
-  <div class="jumbotron">
+  <div ng-show="positions" class="jumbotron">
 
   <h2 class="text-center">Portfolio Value</h2>
 
@@ -145,6 +146,7 @@
 
 
   </div>
+
 
 
 
