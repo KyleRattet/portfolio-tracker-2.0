@@ -209,6 +209,7 @@ app.controller('PortfolioController', ['$scope', '$http', 'httpFactory' , functi
   };
 
   $scope.updateStock = function (id, updatedStock) {
+    $scope.edit = false;
     var update = updatedStock;
     var stockURL = "api/v1/stock/"+ id;
     httpFactory.put(stockURL, update)

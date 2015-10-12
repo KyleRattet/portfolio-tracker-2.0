@@ -24,7 +24,7 @@
       </div>
       <div class="col-xs-2 form-group">
         <label>Transact</label>
-        <button type="submit" ng-click="updateStock(stock._id, stock)" class="btn btn-success">Submit Transaction</button>
+        <button type="submit" ng-click="updateStock(stock._id, stock)" class="btn btn-success">Submit Transaction <span class="glyphicon glyphicon-ok-sign"></span</button>
       </div>
     </form>
 
@@ -33,12 +33,12 @@
 
   <div class="portfolio-holdings">
 
-    <h2 class="text-center">Portfolio Holdings&nbsp;<span><button type="submit" ng-hide="positions" ng-click="updateLast(); updatePortfolio();positions = !positions" class="btn btn-success btn-sm">Expand</button></span><span><button type="submit" ng-show="positions" ng-click="positions = !positions" class="btn btn-success btn-sm">Collapse</button></span></h2>
+    <h2 class="text-center">Portfolio Holdings&nbsp;<span><button type="submit" ng-hide="positions" ng-click="updateLast(); updatePortfolio();positions = !positions" class="btn btn-success btn-sm">Expand <span class="glyphicon glyphicon-plus-sign"></span></button></span><span><button type="submit" ng-show="positions" ng-click="positions = !positions" class="btn btn-danger btn-sm">Collapse <span class="glyphicon glyphicon-minus-sign"></span></button></span></h2>
   <div ng-show="positions">
   <div class="portfolio-table-label">
-    <label>Filter Positions:</label>
+    <label>Filter Positions <span class="glyphicon glyphicon-search"></span> </label>
     <input ng-model="searchText">
-    <span><strong>Sort Portfolio: </strong><select class="form-inline" ng-model="sort">
+    <span><strong>Sort Portfolio <span class="glyphicon glyphicon-sort"></span> </strong><select class="form-inline" ng-model="sort">
       <option value='ticker'>Stock</option>
       <option value='shares'>Position</option>
       <option value='costBasis'>Cost Basis</option>
@@ -50,7 +50,7 @@
       <option value='side'>Long/Short</option>
       <option value='date'>Transaction Date</option>
     </select>
-    <button type="submit" ng-click="updateLast(); updatePortfolio()" class="btn btn-success btn-sm">Refresh Prices</button>
+    <button type="submit" ng-click="updateLast(); updatePortfolio()" class="btn btn-success btn-sm">Refresh Prices <span class="glyphicon glyphicon-refresh"></button>
     <span>Last Refresh : {{refresh | date : 'MMM d, y h:mm:ss a'}}</span>
   </div>
   <br>
@@ -85,8 +85,8 @@
           <td>{{stock.side | side }}</td>
           <td>{{stock.date | date: 'M/d/yy h:mm a'}}</td>
           <td class="text-center">
-          <button ng-hide="name" ng-click="editStock(stock._id)" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></button>
-          <button ng-click="deleteStock(stock._id)" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
+          <button ng-hide="name" ng-click="editStock(stock._id)" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span></button>
+          <button ng-click="deleteStock(stock._id)" class="btn btn-danger"><span class="glyphicon glyphicon-remove-circle"></span></button>
           </td>
         </tr>
       </tbody>
