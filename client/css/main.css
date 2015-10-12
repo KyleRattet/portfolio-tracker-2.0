@@ -26,6 +26,7 @@ a {
 .quote-render {
   border: thin solid gray;
   border-radius: 25px;
+  font-size: 20px;
 }
 
 .add-form {
@@ -38,12 +39,14 @@ a {
   border: thin solid gray;
   border-radius: 25px;
   padding: 10px;
+  margin: 10px;
 }
 
 .market-pulse {
   border: thin solid gray;
   border-radius: 25px;
   padding: 10px;
+  font-size: 20px;
 }
 
 .portfolio-holdings {
@@ -51,6 +54,7 @@ a {
   border-radius: 25px;
   padding: 10px;
   clear: both;
+  font-size: 20px;
 }
 
 th {
@@ -58,7 +62,10 @@ th {
 }
 
 .performance {
-  font-size: 20px;
+  font-size: 25px;
+  border: thin solid gray;
+  border-radius: 25px;
+  padding: 10px;
 }
 
 .market-pulse.ng-enter {

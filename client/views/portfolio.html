@@ -1,6 +1,39 @@
   <h1 class="text-center"><strong>Portfolio</strong></h1>
   <hr>
-   <div class="row edit-form" ng-show="edit">
+
+  <br>
+
+  <div class="performance">
+    <h2 class="text-center">Portfolio Performance&nbsp;<span><button type="submit" ng-hide="positions" ng-click="updateLast(); updatePortfolio();positions = !positions" class="btn btn-success btn-sm">Expand <span class="glyphicon glyphicon-plus-sign"></span></button></h2>
+    <table class="table table-bordered table-striped text-center">
+      <thead>
+        <tr>
+          <th>Cost Basis</th>
+          <th>Market Value</th>
+          <th>Percent Performance</th>
+          <th>Dollar Performance</th>
+        </tr>
+      </thead>
+      <tbody>
+          <td>{{ initialValue() | currency }}</td>
+          <td>{{ portfolioMarketValue() | currency }}</td>
+          <td><span ng-class="{'positive':portfolioMarketValue() - initialValue() > 0, 'negative':portfolioMarketValue() - initialValue() < 0}">{{(portfolioMarketValue()/initialValue()-1)*100 | number:1}}%</span></td>
+          <td><span ng-class="{'positive':portfolioMarketValue() - initialValue() > 0, 'negative':portfolioMarketValue() - initialValue() < 0}">{{portfolioMarketValue() - initialValue() | currency}}</span></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <br>
+
+
+
+  <div ng-show="positions" class="portfolio-holdings">
+
+    <h2 class="text-center">Portfolio Holdings&nbsp;<span><button type="submit" ng-hide="positions" ng-click="updateLast(); updatePortfolio();positions = !positions" class="btn btn-success btn-sm">Expand <span class="glyphicon glyphicon-plus-sign"></span></button></span><span><button type="submit" ng-show="positions" ng-click="positions = !positions" class="btn btn-danger btn-sm">Collapse <span class="glyphicon glyphicon-minus-sign"></span></button></span></h2>
+
+  <div class="row edit-form" ng-show="edit">
+  <h2 class="text-center">Edit Position</h2>
 
     <form>
       <div class="col-xs-2 form-group">
@@ -29,11 +62,8 @@
     </form>
 
   </div>
+
   <br>
-
-  <div class="portfolio-holdings">
-
-    <h2 class="text-center">Portfolio Holdings&nbsp;<span><button type="submit" ng-hide="positions" ng-click="updateLast(); updatePortfolio();positions = !positions" class="btn btn-success btn-sm">Expand <span class="glyphicon glyphicon-plus-sign"></span></button></span><span><button type="submit" ng-show="positions" ng-click="positions = !positions" class="btn btn-danger btn-sm">Collapse <span class="glyphicon glyphicon-minus-sign"></span></button></span></h2>
   <div ng-show="positions">
   <div class="portfolio-table-label">
     <label>Filter Positions <span class="glyphicon glyphicon-search"></span> </label>
