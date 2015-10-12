@@ -7,21 +7,16 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 // var swig = require('swig');
 var mongoose = require('mongoose');
-var expressSession = require('express-session');
-var hash = require('bcrypt-nodejs');
-var path = require('path');
 var passport = require('passport');
-var localStrategy = require('passport-local' ).Strategy;
+var session = require('express-session');
 
-// user schema/model
-var User = require('./models/user.js');
 // *** routes *** //
 // var routes = require('./routes/index.js');
-
-
-var routes = require('./routes/api.js');
 var apiRoutes = require('./routes/api.js');
 var chartRoutes = require('./routes/chart.js');
+
+//new routes/auth
+var user = require('./routes/userAPI.js');
 // *** express instance *** //
 var app = express();
 
@@ -55,7 +50,9 @@ mongoose.connect(config.mongoURI[app.settings.env], function(err, res) {
 // app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, '../client')));
 
-//auth middleware
+// app.use(passport.initialize());
+// app.use(passport.session());
+
 // define middleware
 app.use(express.static(path.join(__dirname, '../client')));
 app.use(logger('dev'));
@@ -72,17 +69,17 @@ app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // configure passport
-passport.use(new localStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+// passport.use(new localStrategy(User.authenticate()));
+// passport.serializeUser(User.serializeUser());
+// passport.deserializeUser(User.deserializeUser());
+
 
 // *** main routes *** //
 // app.use('/', routes);
 app.use('/api/v1/', apiRoutes);
 app.use('/chart/', chartRoutes);
-
 //auth route
-app.use('/user/', routes);
+app.use('/auth', user);
 //NEW MAIN ROUTE
 app.use('/', function (req,res) {
   res.sendFile(path.join(__dirname, '../client/views/', 'index.html'));
@@ -101,21 +98,35 @@ app.use(function(req, res, next) {
 
 // development error handler
 // will print stacktrace
+// if (app.get('env') === 'development') {
+//   app.use(function(err, req, res, next) {
+//     res.status(err.status || 500);
+//     res.render('error', {
+//       message: err.message,
+//       error: err
+//     });
+//   });
+// }
+
+// updated development error handler
+// will print stacktrace
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
+    res.status(err.status || 500).json({status: 'Error!'});
   });
 }
 
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
+  res.status(err.status || 500).json({status: 'Error!'});
+});
+
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-  res.render('error', {
+  res.send('error', {
     message: err.message,
     error: {}
   });
