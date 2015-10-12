@@ -1,44 +1,10 @@
 app.controller('MainController', ['$scope', '$http', 'httpFactory' , function($scope, $http, httpFactory) {
 
-  // $scope.portfolio = [];
 
-
-
-  //quote controller (renders trade ticket)
   $scope.tradeForm = function () {
     $scope.trade = true;
   };
 
-   //get stock from portfolio, api call to my database
-  // getStocks = function (url) {
-  //   httpFactory.get(url)
-  //   .then(function(response){
-  //     $scope.portfolio = response.data;
-  //   });
-  // };
-
-  // getStocks('api/v1/stocks');
-
-
-  // $scope.initialValue = function() {
-  //   var total = 0;
-  //   for (var i = 0; i < $scope.portfolio.length; i++) {
-  //     var stock = $scope.portfolio[i];
-  //     total += (stock.costBasis * stock.shares);
-  //   }
-  //   return total;
-  // };
-
-  // $scope.portfolioMarketValue = function() {
-  //   var total = 0;
-  //   for (var i = 0; i < $scope.portfolio.length; i++) {
-  //     var stock = $scope.portfolio[i];
-  //     total += (stock.last * stock.shares);
-  //   }
-  //   return total;
-  // };
-
-  // //api call to get stock quote
   $scope.getQuote = function (symbol) {
     $scope.quote = true;
     $scope.pulse = true;
@@ -137,62 +103,6 @@ app.controller('MainController', ['$scope', '$http', 'httpFactory' , function($s
 
   };
 
-//portfolio controller
-//   $scope.xAxisTickFormatFunction = function(){
-//   return function(date){
-//     return d3.time.format('%x')(new Date(date));
-//   };
-// };
-//   //epoch time
-//   function getTime () {
-//     var time = Math.round(new Date().getTime());
-//     return time;
-//   }
-
-//   $scope.chartData =[];
-//   $scope.portfolioDBValue = [];
-
-
-// /////portfolio controller section
-//   getPortfolio = function (url) {
-//     httpFactory.get(url)
-//     .then(function(response){
-//       $scope.portfolioDBValue = response.data;
-//     });
-//   };
-
-//   getPortfolio('chart/portfolio');
-
-//   var valuesArray = [];
-
-//   $scope.updatePortfolio = function () {
-
-//     var newPortfolio = {
-//       value: $scope.portfolioMarketValue(),
-//       date: getTime(),
-//     };
-//     httpFactory.post('chart/portfolio', newPortfolio)
-//     .then(function(response) {
-//       $scope.portfolioDBValue.push(response.data);
-//       getPortfolio('chart/portfolio');
-//       console.log($scope.portfolioDBValue, "portfolio value from the database");
-
-//       for(i=0; i < $scope.portfolioDBValue.length; i++){
-//         var new_array = [$scope.portfolioDBValue[i].date, $scope.portfolioDBValue[i].value];
-//           $scope.chartData.push(new_array);
-//       }
-
-//          $scope.portfolioData = [
-//                 {
-//                     "key": "Portfolio Value",
-//                     "values": $scope.chartData
-//                 }];
-
-//     });
-
-//   };
-
-
 }]);
 
 app.controller('PortfolioController', ['$scope', '$http', 'httpFactory' , function($scope, $http, httpFactory) {
@@ -227,7 +137,6 @@ app.controller('PortfolioController', ['$scope', '$http', 'httpFactory' , functi
     });
   };
 
-   //get stock from portfolio, api call to my database
   getStocks = function (url) {
     httpFactory.get(url)
     .then(function(response){
@@ -271,8 +180,6 @@ app.controller('PortfolioController', ['$scope', '$http', 'httpFactory' , functi
   $scope.chartData =[];
   $scope.portfolioDBValue = [];
 
-
-/////portfolio controller section
   getPortfolio = function (url) {
     httpFactory.get(url)
     .then(function(response){
@@ -323,10 +230,6 @@ app.controller('PortfolioController', ['$scope', '$http', 'httpFactory' , functi
       });
     });
   };
-
-  // $scope.updateLast();
-  // $scope.updatePortfolio();
-
 
   }]);
 
@@ -412,84 +315,4 @@ app.controller('registerController',
     };
 
 }]);
-// angular.module('myApp').controller('loginController',
-//   ['$scope', '$location', 'AuthService',
-//   function ($scope, $location, AuthService) {
 
-//     console.log(AuthService.getUserStatus());
-
-//     $scope.login = function () {
-
-//       // initial values
-//       $scope.error = false;
-//       $scope.disabled = true;
-
-//       // call login from service
-//       AuthService.login($scope.loginForm.username, $scope.loginForm.password)
-//         // handle success
-//         .then(function () {
-//           $location.path('/');
-//           $scope.disabled = false;
-//           $scope.loginForm = {};
-//         })
-//         // handle error
-//         .catch(function () {
-//           $scope.error = true;
-//           $scope.errorMessage = "Invalid username and/or password";
-//           $scope.disabled = false;
-//           $scope.loginForm = {};
-//         });
-
-//     };
-
-// }]);
-
-// angular.module('myApp').controller('logoutController',
-//   ['$scope', '$location', 'AuthService',
-//   function ($scope, $location, AuthService) {
-
-//     $scope.logout = function () {
-
-//       console.log(AuthService.getUserStatus());
-
-//       // call logout from service
-//       AuthService.logout()
-//         .then(function () {
-//           $location.path('/login');
-//         });
-
-//     };
-
-// }]);
-
-// angular.module('myApp').controller('registerController',
-//   ['$scope', '$location', 'AuthService',
-//   function ($scope, $location, AuthService) {
-
-//     console.log(AuthService.getUserStatus());
-
-//     $scope.register = function () {
-
-//       // initial values
-//       $scope.error = false;
-//       $scope.disabled = true;
-
-//       // call register from service
-//       AuthService.register($scope.registerForm.username, $scope.registerForm.password)
-//         // handle success
-//         .then(function () {
-//           $location.path('/login');
-//           $scope.disabled = false;
-//           $scope.registerForm = {};
-//         })
-//         // handle error
-//         .catch(function () {
-//           $scope.error = true;
-//           $scope.errorMessage = "Something went wrong!";
-//           $scope.disabled = false;
-//           $scope.registerForm = {};
-//         });
-
-//     };
-
-// }]);

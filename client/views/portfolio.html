@@ -81,7 +81,7 @@
       <option value='date'>Transaction Date</option>
     </select>
     <button type="submit" ng-click="updateLast(); updatePortfolio()" class="btn btn-success btn-sm">Refresh Prices <span class="glyphicon glyphicon-refresh"></button>
-    <span>Last Refresh : {{refresh | date : 'MMM d, y h:mm:ss a'}}</span>
+    <span>Last Updated : {{refresh | date : 'MMM d, y h:mm:ss a'}}</span>
   </div>
   <br>
 
@@ -167,7 +167,7 @@
           yAxisLabel="Portfolio Market Value"
           xAxisLabel="Date"
           margin='{left:100,top:20,bottom:100,right:20}'
-          forcey="[75000,75500]"
+          forcey="[75700,76000]"
           >
         <svg></svg>
         </nvd3-line-chart>
