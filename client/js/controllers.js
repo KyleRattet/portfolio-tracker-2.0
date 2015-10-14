@@ -201,7 +201,7 @@ app.controller('PortfolioController', ['$scope', '$http', 'httpFactory' , functi
     .then(function(response) {
       $scope.portfolioDBValue.push(response.data);
       getPortfolio('chart/portfolio');
-      console.log($scope.portfolioDBValue, "portfolio value from the database");
+      // console.log($scope.portfolioDBValue, "portfolio value from the database");
 
       for(i=0; i < $scope.portfolioDBValue.length; i++){
         var new_array = [$scope.portfolioDBValue[i].date, $scope.portfolioDBValue[i].value];

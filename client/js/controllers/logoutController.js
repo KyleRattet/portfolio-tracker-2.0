@@ -3,7 +3,7 @@ app.controller('logoutController',
   function ($scope, $location, AuthService) {
 
     $scope.logout = function () {
-      console.log("logout button");
+      // console.log("logout button");
 
       // console.log(AuthService.getUserStatus());
 

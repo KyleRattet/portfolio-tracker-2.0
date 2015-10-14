@@ -19,7 +19,7 @@ app.controller('registerController',
         })
         // handle error
         .catch(function () {
-          console.log("test catch");
+          // console.log("test catch");
           $scope.error = true;
           $scope.errorMessage = "Something went wrong!";
           $scope.disabled = false;
