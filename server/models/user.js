@@ -13,4 +13,4 @@ User.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model('users', User);
 
-mongoose.connect(process.env.MONGOLAB_URI || "mongodb://localhost/users");
+// mongoose.connect(process.env.MONGOLAB_URI || "mongodb://localhost/users");

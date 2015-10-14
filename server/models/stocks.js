@@ -16,4 +16,4 @@ module.exports = mongoose.model('stocks', Stock);
 
 
 // for heroku later
-mongoose.connect(process.env.MONGOLAB_URI || "mongodb://localhost/stocks");
+// mongoose.connect(process.env.MONGOLAB_URI || "mongodb://localhost/stocks");
