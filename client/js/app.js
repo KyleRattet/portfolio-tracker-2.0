@@ -14,12 +14,12 @@ app.config(['$routeProvider', function($routeProvider) {
         access: {restricted: true}
       })
       //update these correctly
-      .when('/homepage', {
+      .when('/', {
         templateUrl: '../views/home.html',
         controller: 'MainController',
         access: {restricted: false}
       })
-      .when('/', {
+      .when('/home', {
         templateUrl: 'partials/home.html'})
       .when('/login', {
         templateUrl: 'partials/login.html',

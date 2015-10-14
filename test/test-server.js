@@ -7,13 +7,14 @@ var mongoose = require('mongoose');
 var server = require('../server/app');
 var Stock = require('../server/models/stocks');
 var Portfolio = require('../server/models/portfolio');
+var User = require('../server/models/user');
 
 var should = chai.should();
 chai.use(chaiHttp);
 
 
 
-describe('Stock', function() {
+xdescribe('Stock', function() {
 
 //SETUP HOOKS TO CREATE PURE TESTING ENVIRONMENT
   Stock.collection.drop();
@@ -170,7 +171,7 @@ describe('Stock', function() {
 
 });
 
-describe('Portfolio', function() {
+xdescribe('Portfolio', function() {
 
 //SETUP HOOKS TO CREATE PURE TESTING ENVIRONMENT
   Portfolio.collection.drop();
@@ -221,6 +222,45 @@ describe('Portfolio', function() {
       res.body.SUCCESS[0].should.have.property('date');
       res.body.SUCCESS[0].value.should.equal(12500);
       res.body.SUCCESS[0].date.should.equal(1443753358111);
+      done();
+    });
+  });
+
+});
+
+describe('User', function() {
+
+//SETUP HOOKS TO CREATE PURE TESTING ENVIRONMENT
+  User.collection.drop();
+
+  beforeEach(function(done){
+    var newUser = new User({
+      username: 'Billy',
+      password: 'test',
+      portfolio: ['test porfolio']
+    });
+    newUser.save(function(err) {
+      done();
+    });
+  });
+  afterEach(function(done){
+    User.collection.drop();
+    done();
+  });
+
+   it('should list user on /user GET request', function(done){
+    chai.request(server)
+    .get('/auth/userportfolio')
+    .end(function(err, res) {
+      res.should.have.status(200);
+      res.should.be.json;
+      console.log(res.body);
+      // res.body.should.be.a('array');
+      // res.body[0].should.have.property('_id');
+      // res.body[0].should.have.property('value');
+      // res.body[0].should.have.property('date');
+      // res.body[0].value.should.equal(10000);
+      // res.body[0].date.should.equal(1443753358000);
       done();
     });
   });

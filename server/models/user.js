@@ -1,12 +1,12 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var passportLocalMongoose = require('passport-local-mongoose');
-
+var Portfolio = require('../models/portfolio.js');
 
 var User = new Schema({
   username: String,
   password: String,
-  someID: String
+  portfolio: [{type: Schema.Types.ObjectId, ref: 'porfolios'}]
 });
 
 User.plugin(passportLocalMongoose);

@@ -79,6 +79,7 @@ router.delete('/stock/:id', function(req, res, next) {
    .done();
 });
 
+
 // ///Auth Section///
 // router.post('/register', function(req, res) {
 //   User.register(new User({ username: req.body.username }), req.body.password, function(err, account) {

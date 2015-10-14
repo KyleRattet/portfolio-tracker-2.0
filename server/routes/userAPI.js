@@ -4,6 +4,9 @@ var passport = require('passport');
 var passportLocal = require('../auth/local');
 var User = require('../models/user.js');
 
+var Portfolio = require('../models/portfolio.js');
+var Stock = require('../models/stocks.js');
+
 
 
 router.post('/register', function(req, res) {
@@ -21,8 +24,9 @@ router.post('/register', function(req, res) {
 });
 
 router.post('/login', function(req, res, next) {
-  passport.authenticate('local', function(err, user, info) {
 
+  passport.authenticate('local', function(err, user, info) {
+    // console.log(user);
     if (err) {
       return next(err);
     }
@@ -35,7 +39,8 @@ router.post('/login', function(req, res, next) {
       }
       res.status(200).json({status: 'Login successful!',
         user: req.user.username});
-      console.log(req.user.username, "req.userrrrr");
+      // console.log(req.user._id, "req.userrrrr id");
+      console.log(req.session.passport.user, "req sessionnn");
     });
   })(req, res, next);
 });
@@ -43,6 +48,24 @@ router.post('/login', function(req, res, next) {
 router.get('/logout', function(req, res) {
   req.logout();
   res.status(200).json({status: 'Bye!'});
+});
+
+
+//get all portfolio from a user
+router.get('/userportfolio', function(req, res, next){
+ User.findById(req.session.user._id, function(err, user){
+  console.log(user);
+ })
+  .populate('portfolios')
+  .exec(function(err, user){
+    if(err){
+      res.json(err);
+    }
+    else{
+      console.log(user);
+      res.json(user);
+    }
+  });
 });
 
 module.exports = router;
