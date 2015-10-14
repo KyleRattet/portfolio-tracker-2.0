@@ -12,3 +12,5 @@ var User = new Schema({
 User.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model('users', User);
+
+mongoose.connect(process.env.MONGOLAB_URI || "mongodb://localhost/users");
