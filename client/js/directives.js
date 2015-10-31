@@ -5,6 +5,12 @@ app.directive('myNavBar', function () {
   };
 });
 
+app.directive('myFooter', function () {
+  return {
+    restrict: 'E',
+    templateUrl: 'templates/footer.html',
+  };
+});
 app.directive('quoteInput', function () {
   return {
     restrict: 'E',

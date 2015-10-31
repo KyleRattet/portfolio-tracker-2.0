@@ -1,4 +1,64 @@
-app.controller('MainController', ['$scope', '$http', 'httpFactory' , function($scope, $http, httpFactory) {
+app.controller('MainController', ['$scope', '$http', 'httpFactory', 'AuthService' , function($scope, $http, httpFactory, AuthService) {
+
+  function displayName () {
+    if(AuthService.getUserStatus() === false) {
+      $scope.userName = '';
+    } else {
+      $scope.welcome = true;
+    }
+  };
+
+
+
+  $scope.portfolioDBValue = [];
+  // $scope.userName = "";
+
+  function getPortfolio () {
+    $http.get('/users/' + $scope.userid + '/stocks')
+      .catch(function(){
+        $scope.gameError = "Error!";})
+      .then(function(data){
+        $scope.userPortfolio = data.data;
+      });
+  }
+
+  function getUser () {
+    $http.get('/auth/userinfo')
+      .catch(function(){
+        $scope.userError = "Error!";})
+      .then(function(data){
+
+        $scope.userName = data.data.username;
+        console.log($scope.userName, "username scope")
+        $scope.userid = data.data._id;
+        $scope.portfolioDBValue = data.data;
+        getPortfolio('/users/' + $scope.userid + '/stocks');
+        displayName();
+      });
+  }
+
+  getUser();
+
+  console.log(AuthService.getUserStatus(),  "main controller");
+
+
+
+
+  $scope.addStock = function (symbol) {
+    var newStock = {
+      ticker: $scope.stockData.Symbol,
+      side: $scope.side,
+      shares: $scope.shares,
+      last: $scope.stockData.LastTradePriceOnly,
+      costBasis: $scope.stockData.LastTradePriceOnly,
+      date: new Date()
+    };
+    var id = $scope.userid;
+    httpFactory.post('/users/' + id + '/stocks', newStock)
+    .then(function(response) {
+      $scope.userPortfolio.push(response.data);
+    });
+  };
 
 
   $scope.tradeForm = function () {
@@ -11,7 +71,6 @@ app.controller('MainController', ['$scope', '$http', 'httpFactory' , function($s
     var stock = $http.get("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22"+symbol+"%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=")
     .then(function(data) {
       $scope.stockData = data.data.query.results.quote;
-      console.log($scope.stockData);
     });
   };
 
@@ -70,44 +129,55 @@ app.controller('MainController', ['$scope', '$http', 'httpFactory' , function($s
   $scope.getUSD('DX-Y.NYB');
 
 
-
-  $scope.updateLast = function () {
-    $scope.portfolio.forEach(function(obj){
-      var symbol = obj.ticker;
-      var url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22"+symbol+"%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
-      $http.get(url).then(function(data) {
-        var lastTradePrice = data.data.query.results.quote.LastTradePriceOnly;
-        obj.last = lastTradePrice;
-        $scope.updateStock(obj._id, obj);
-        $scope.refresh = new Date();
-      });
-    });
-  };
-
-  $scope.addStock = function (symbol) {
-
-    var newStock = {
-      ticker: $scope.stockData.Symbol,
-      side: $scope.side,
-      shares: $scope.shares,
-      last: $scope.stockData.LastTradePriceOnly,
-      costBasis: $scope.stockData.LastTradePriceOnly,
-      date: new Date()
-    };
-    httpFactory.post('api/v1/stocks', newStock)
-    .then(function(response) {
-      $scope.portfolio.push(response.data);
-      getStocks('api/v1/stocks');
-
-    });
-
-  };
-
 }]);
 
 app.controller('PortfolioController', ['$scope', '$http', 'httpFactory' , function($scope, $http, httpFactory) {
 
-  $scope.portfolio = [];
+   function displayName () {
+    if(AuthService.getUserStatus() === false) {
+      $scope.userName = '';
+    } else {
+      $scope.welcome = true;
+    }
+  };
+
+
+
+  $scope.userPortfolio = [];
+  $scope.portfolioDBValue = [];
+
+  function getPortfolio () {
+    $http.get('/users/' + $scope.userid + '/stocks')
+      .catch(function(){
+        $scope.userError = "Error!";})
+      .then(function(data){
+        $scope.userPortfolio = data.data;
+      });
+  }
+
+  function getUserPortfolio () {
+    $http.get('/users/' + $scope.userid + '/portfolios')
+      .catch(function(){
+        $scope.gameError = "Error!";})
+      .then(function(data){
+        $scope.portfolioDBValue = data.data;
+      });
+  }
+
+  function getUser () {
+    $http.get('/auth/userinfo')
+      .catch(function(){
+        $scope.error = "Error!";})
+      .then(function(data){
+        displayName();
+        $scope.userid = data.data._id;
+        getPortfolio('/users/' + $scope.userid + '/stocks');
+        getUserPortfolio('/users/' + $scope.userid + '/portfolios');
+        displayName();
+      });
+  }
+
+  getUser();
 
    $scope.editStock = function (id) {
     $scope.edit = true;
@@ -124,70 +194,54 @@ app.controller('PortfolioController', ['$scope', '$http', 'httpFactory' , functi
     var stockURL = "api/v1/stock/"+ id;
     httpFactory.put(stockURL, update)
     .then(function(response){
-      getStocks('api/v1/stocks');
+      getPortfolio('/users/' + $scope.userid + '/stocks');
       $scope.stock = {};
     });
   };
 
   $scope.deleteStock = function (id) {
+    console.log(id, "id");
+    console.log(id, "delete firing");
     stockURL = "api/v1/stock/"+ id;
     httpFactory.delete(stockURL)
     .then(function(response) {
-      getStocks('api/v1/stocks');
+      getPortfolio('/users/' + $scope.userid + '/stocks');
     });
   };
-
-  getStocks = function (url) {
-    httpFactory.get(url)
-    .then(function(response){
-      $scope.portfolio = response.data;
-    });
-  };
-
-  getStocks('api/v1/stocks');
-
 
   $scope.initialValue = function() {
+
     var total = 0;
-    for (var i = 0; i < $scope.portfolio.length; i++) {
-      var stock = $scope.portfolio[i];
+    for (var i = 0; i < $scope.userPortfolio.length; i++) {
+      var stock = $scope.userPortfolio[i];
       total += (stock.costBasis * stock.shares);
     }
     return total;
   };
 
   $scope.portfolioMarketValue = function() {
+
     var total = 0;
-    for (var i = 0; i < $scope.portfolio.length; i++) {
-      var stock = $scope.portfolio[i];
+    for (var i = 0; i < $scope.userPortfolio.length; i++) {
+      var stock = $scope.userPortfolio[i];
       total += (stock.last * stock.shares);
     }
     return total;
   };
 
-  //portfolio controller
+
   $scope.xAxisTickFormatFunction = function(){
   return function(date){
     return d3.time.format('%x')(new Date(date));
   };
 };
-  //epoch time
+
   function getTime () {
     var time = Math.round(new Date().getTime());
     return time;
   }
 
   $scope.chartData =[];
-  $scope.portfolioDBValue = [];
-
-  getPortfolio = function (url) {
-    httpFactory.get(url)
-    .then(function(response){
-      $scope.portfolioDBValue = response.data;
-    });
-  };
-
-  getPortfolio('chart/portfolio');
 
   var valuesArray = [];
 
@@ -197,17 +251,14 @@ app.controller('PortfolioController', ['$scope', '$http', 'httpFactory' , functi
       value: $scope.portfolioMarketValue(),
       date: getTime(),
     };
-    httpFactory.post('chart/portfolio', newPortfolio)
+    httpFactory.post('/users/' + $scope.userid + '/portfolios', newPortfolio)
     .then(function(response) {
-      $scope.portfolioDBValue.push(response.data);
-      getPortfolio('chart/portfolio');
-      // console.log($scope.portfolioDBValue, "portfolio value from the database");
+      $scope.portfolioDBValue.push(response.data.portfolios);
 
       for(i=0; i < $scope.portfolioDBValue.length; i++){
         var new_array = [$scope.portfolioDBValue[i].date, $scope.portfolioDBValue[i].value];
           $scope.chartData.push(new_array);
       }
-
          $scope.portfolioData = [
                 {
                     "key": "Portfolio Value",
@@ -215,11 +266,11 @@ app.controller('PortfolioController', ['$scope', '$http', 'httpFactory' , functi
                 }];
 
     });
-
   };
 
-    $scope.updateLast = function () {
-    $scope.portfolio.forEach(function(obj){
+  $scope.updateLast = function () {
+
+    $scope.userPortfolio.forEach(function(obj){
       var symbol = obj.ticker;
       var url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22"+symbol+"%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
       $http.get(url).then(function(data) {
@@ -229,90 +280,8 @@ app.controller('PortfolioController', ['$scope', '$http', 'httpFactory' , functi
         $scope.refresh = new Date();
       });
     });
+
   };
 
-  }]);
-
-// //auth
-// app.controller('loginController',
-//   ['$scope', '$location', 'AuthService',
-//   function ($scope, $location, AuthService) {
-
-//     console.log(AuthService.getUserStatus());
-
-//     $scope.login = function () {
-
-//       // initial values
-//       $scope.error = false;
-//       $scope.disabled = true;
-
-//       // call login from service
-//       AuthService.login($scope.loginForm.username, $scope.loginForm.password)
-//         // handle success
-//         .then(function () {
-//           $location.path('/');
-//           $scope.disabled = false;
-//           $scope.loginForm = {};
-//         })
-//         // handle error
-//         .catch(function () {
-//           $scope.error = true;
-//           $scope.errorMessage = "Invalid username and/or password";
-//           $scope.disabled = false;
-//           $scope.loginForm = {};
-//         });
-
-//     };
-
-// }]);
-
-// app.controller('logoutController',
-//   ['$scope', '$location', 'AuthService',
-//   function ($scope, $location, AuthService) {
-
-//     $scope.logout = function () {
-
-//       console.log(AuthService.getUserStatus());
-
-//       // call logout from service
-//       AuthService.logout()
-//         .then(function () {
-//           $location.path('/login');
-//         });
-
-//     };
-
-// }]);
-
-// app.controller('registerController',
-//   ['$scope', '$location', 'AuthService',
-//   function ($scope, $location, AuthService) {
-
-//     console.log(AuthService.getUserStatus());
-
-//     $scope.register = function () {
-
-//       // initial values
-//       $scope.error = false;
-//       $scope.disabled = true;
-
-//       // call register from service
-//       AuthService.register($scope.registerForm.username, $scope.registerForm.password)
-//         // handle success
-//         .then(function () {
-//           $location.path('/login');
-//           $scope.disabled = false;
-//           $scope.registerForm = {};
-//         })
-//         // handle error
-//         .catch(function () {
-//           $scope.error = true;
-//           $scope.errorMessage = "Something went wrong!";
-//           $scope.disabled = false;
-//           $scope.registerForm = {};
-//         });
-
-//     };
-
-// }]);
+}]);
 

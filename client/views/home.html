@@ -1,7 +1,7 @@
 <div class="row text-center">
 
-<h1><strong>Welcome to Mock Investor</strong></h1>
-
+<h1 ng-hide="welcome"><strong>Welcome to Mock Investor</strong><span><h5>Please sign in to view your portilio.</h5></span></h1>
+<h1 ng-show="welcome"><strong>Welcome back to Mock Investor, {{userName}}!</strong></h1>
   <a href="#/research">
   <button type="submit" class="btn btn-primary btn-lg">Research</button>
   </a>
@@ -15,4 +15,6 @@
 
 </div>
 
-
+<!--     <footer>
+      <span>Kyle Rattet, CFA&nbsp;\\&nbsp;2015</span>
+    </footer> -->

@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose-q')(require('mongoose'), {spread:true});
-var Portfolio = require('../models/portfolio.js');
+var Portfolio = require('../models/portfolios.js');
 
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
@@ -21,6 +21,7 @@ router.post('/portfolio', function (req, res, next) {
     value: req.body.value,
     date: req.body.date,
   });
+  console.log(newPortfolio, "new portfolio");
   newPortfolio.saveQ()
     .then(function (result) {
       res.json({"SUCCESS":result});

@@ -4,7 +4,7 @@ var passport = require('passport');
 var passportLocal = require('../auth/local');
 var User = require('../models/user.js');
 
-var Portfolio = require('../models/portfolio.js');
+var Portfolio = require('../models/portfolios.js');
 var Stock = require('../models/stocks.js');
 
 
@@ -24,10 +24,10 @@ router.post('/register', function(req, res) {
 });
 
 router.post('/login', function(req, res, next) {
-
+    // console.log('HHHHHH');
   passport.authenticate('local', function(err, user, info) {
-    // console.log(user);
     if (err) {
+      console.log(err);
       return next(err);
     }
     if (!user) {
@@ -37,10 +37,16 @@ router.post('/login', function(req, res, next) {
       if (err) {
         return res.status(500).json({err: 'Could not log in user'});
       }
-      res.status(200).json({status: 'Login successful!',
-        user: req.user.username});
-      // console.log(req.user._id, "req.userrrrr id");
-      console.log(req.session.passport.user, "req sessionnn");
+      //new
+      req.session.user = user;
+      // user._id = userid;
+      console.log(user)
+      // console.log(userid)
+      res.status(200).json({
+        status: 'Login successful!',
+        user: user
+
+      });
     });
   })(req, res, next);
 });
@@ -51,11 +57,11 @@ router.get('/logout', function(req, res) {
 });
 
 
-//get all portfolio from a user
-router.get('/userportfolio', function(req, res, next){
+router.get('/userinfo', function(req, res, next){
  User.findById(req.session.user._id, function(err, user){
   console.log(user);
  })
+  .populate('stocks')
   .populate('portfolios')
   .exec(function(err, user){
     if(err){
@@ -67,5 +73,22 @@ router.get('/userportfolio', function(req, res, next){
     }
   });
 });
+
+//get all portfolio from a user
+// router.get('/userportfolio', function(req, res, next){
+//  User.findById(req.session.user._id, function(err, user){
+//   console.log(user);
+//  })
+//   .populate('portfolios')
+//   .exec(function(err, user){
+//     if(err){
+//       res.json(err);
+//     }
+//     else{
+//       console.log(user);
+//       res.json(user);
+//     }
+//   });
+// });
 
 module.exports = router;

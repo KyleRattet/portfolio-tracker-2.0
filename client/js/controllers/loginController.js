@@ -2,7 +2,7 @@ app.controller('loginController',
   ['$scope', '$location', 'AuthService',
   function ($scope, $location, AuthService) {
 
-    // console.log(AuthService.getUserStatus());
+    console.log(AuthService.getUserStatus());
 
 
 
@@ -19,6 +19,7 @@ app.controller('loginController',
           $location.path('/homepage');
           $scope.disabled = false;
           $scope.loginForm = {};
+          $scope.userName = $scope.loginForm.username;
         })
         // handle error
         .catch(function () {
@@ -26,6 +27,7 @@ app.controller('loginController',
           $scope.errorMessage = "Invalid username and/or password";
           $scope.disabled = false;
           $scope.loginForm = {};
+
         });
 
     };

@@ -13,6 +13,7 @@ var session = require('express-session');
 
 // *** routes *** //
 // var routes = require('./routes/index.js');
+var userRoutes = require('./routes/users.js');
 var apiRoutes = require('./routes/api.js');
 var chartRoutes = require('./routes/chart.js');
 
@@ -77,6 +78,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // *** main routes *** //
 // app.use('/', routes);
+app.use('/users/', userRoutes);
 app.use('/api/v1/', apiRoutes);
 app.use('/chart/', chartRoutes);
 //auth route

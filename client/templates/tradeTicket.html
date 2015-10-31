@@ -29,7 +29,7 @@
        <!--  <label>Transact</label> -->
         <br>
         <a href="#/portfolio">
-        <button type="submit" ng-click="addStock(stockData.Symbol)" class="btn btn-danger btn-lg">Submit Transaction</button>
+        <button type="submit" ng-click="addStock(stockData.Symbol); updateLast(); updatePortfolio()" class="btn btn-danger btn-lg">Submit Transaction</button>
         </a>
       </div>
     </form>

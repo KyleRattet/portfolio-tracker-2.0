@@ -5,12 +5,13 @@ app.controller('logoutController',
     $scope.logout = function () {
       // console.log("logout button");
 
-      // console.log(AuthService.getUserStatus());
-
-      // call logout from service
+      AuthService.getUserStatus();
+           // call logout from service
       AuthService.logout()
         .then(function () {
           $location.path('/login');
+          $scope.userName = "";
+          console.log("logout button")
         });
 
     };

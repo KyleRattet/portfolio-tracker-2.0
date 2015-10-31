@@ -1,4 +1,5 @@
-  <h1 class="text-center"><strong>Portfolio</strong></h1>
+  <h1 class="text-center"><strong>Portfolio</strong>
+  </h1>
   <hr>
 
   <br>
@@ -30,7 +31,7 @@
 
   <div ng-show="positions" class="portfolio-holdings">
 
-    <h2 class="text-center">Portfolio Holdings&nbsp;<span><button type="submit" ng-hide="positions" ng-click="updateLast(); updatePortfolio();positions = !positions" class="btn btn-success btn-sm">Expand <span class="glyphicon glyphicon-plus-sign"></span></button></span><span><button type="submit" ng-show="positions" ng-click="positions = !positions" class="btn btn-danger btn-sm">Collapse <span class="glyphicon glyphicon-minus-sign"></span></button></span></h2>
+    <h2 class="text-center">Portfolio Holdings&nbsp;<span><button type="submit" ng-hide="positions" ng-click="updateLast(); updatePortfolio();positions = !positions" class="btn btn-success btn-sm">Expand <span class="glyphicon glyphicon-plus-sign"></span></button></span><span><button type="submit" ng-show="positions" ng-click="updateLast(); updatePortfolio(); positions = !positions" class="btn btn-danger btn-sm">Collapse <span class="glyphicon glyphicon-minus-sign"></span></button></span></h2>
 
   <div class="row edit-form" ng-show="edit">
   <h2 class="text-center">Edit Position</h2>
@@ -103,7 +104,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="stock in portfolio | filter: searchText | orderBy : sort">
+        <tr ng-repeat="stock in userPortfolio | filter: searchText | orderBy : sort">
           <td>{{stock.ticker}}</td>
           <td>{{stock.shares}}</td>
           <td>{{stock.costBasis | currency}}</td>
@@ -167,7 +168,7 @@
           yAxisLabel="Portfolio Market Value"
           xAxisLabel="Date"
           margin='{left:100,top:20,bottom:100,right:20}'
-          forcey="[75700,76000]"
+
           >
         <svg></svg>
         </nvd3-line-chart>
@@ -183,7 +184,10 @@
 
     </div>
 
-
+<!-- <footer>
+      <span>Kyle Rattet, CFA&nbsp;\\&nbsp;2015</span>
+</footer>
+ -->
 
 
 

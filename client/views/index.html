@@ -7,10 +7,10 @@
   <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/slate/bootstrap.min.css" rel="stylesheet" integrity="sha256-JcgoO7qVianjbv43Z5KinReHzk9/rEZg5m6z/ZZy3DI= sha512-rYMbEYJa5+7VkGdfAypdYHqwIdCNEBKh8lhKUNIv58tgHQuHHzXC/Bzf66BFDkTjq970Lc6OIEpgllKINGDCKQ==" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
   </head>
   <body>
   <!-- <div ng-controller = "MainController"> -->
-
 
     <my-nav-bar></my-nav-bar>
 
@@ -20,6 +20,8 @@
 
   <div ng-view></div>
 
+  <div class="clearfooter"></div>
+  <my-footer></my-footer>
 
 
   <script type="text/javascript" src="//code.jquery.com/jquery-2.1.4.min.js"></script>
@@ -41,211 +43,9 @@
   <script type="text/javascript" src="/js/services/authservices.js"></script>
 
   </body>
+
 </html>
 
-<!--   <div class="row">
-
-  <form class='col-xs-6 form-inline' >
-    <div class="form-group">
-      <label  for="exampleInputEmail1">Stock Ticker: </label>
-      <input ng-model="symbol"type="text" class="form-control" size="5" placeholder="Ticker">
-    </div>
-    <button type="submit" ng-click="getQuote(symbol)" class="btn btn-info">Get Quote</button>
-    <a href="#/portfolio">
-    <button type="submit" ng-click="updateLast(); updatePortfolio()"class="btn btn-info">View Portfolio</button>
-    </a>
-  </form>
-
-
-
-  </div> -->
-  <!-- <hr> -->
-
-<!-- quote render section -->
-
-  <!-- <div ng-show="quote" class="row quote-render">
-
-
-
-    <div class="row">
-      <div class="col-xs-4"><strong>Name:</strong> {{stockData.Name}}</div>
-      <div class="col-xs-4"><strong>Symbol:</strong> {{stockData.Symbol}}</div>
-    </div>
-    <div class="row">
-      <div class="col-xs-4"><strong>Price:</strong> {{stockData.LastTradePriceOnly}}</div>
-      <div class="col-xs-4"><strong>Change:</strong> {{stockData.Change}}</div>
-      <div class="col-xs-4"><strong>% Change:</strong> {{stockData.ChangeinPercent}}</div>
-    </div>
-    <div class="row">
-      <div class="col-xs-4"><strong>Volume:</strong> {{stockData.Volume | number}}</div>
-      <div class="col-xs-4"><strong>Avg. Daily Vol.:</strong> {{stockData.AverageDailyVolume | number}}</div>
-      <div class="col-xs-4"><strong>Mkt. Cap:</strong> {{stockData.MarketCapitalization}}</div>
-    </div>
-    <div class="row">
-      <div class="col-xs-4"><strong>Dividend: </strong>{{stockData.DividendShare}}</div>
-      <div class="col-xs-4"><strong>Dividend Yld.:</strong> {{stockData.DividendYield}}</div>
-      <div class="col-xs-4"><strong>Ex-Div Date:</strong> {{stockData.ExDividendDate}}</div>
-    </div>
-    <div class="row">
-      <div class="col-xs-4"><strong>P/E:</strong> {{stockData.PERatio}}</div>
-      <div class="col-xs-4"><strong>PEG:</strong> {{stockData.PEGRatio}}</div>
-      <div class="col-xs-4"><strong>Price/Sales:</strong> {{stockData.PriceSales}}</div>
-    </div>
-    <div class="row">
-      <div class="col-xs-4"><strong>EPS Est. Current Yr.:</strong> {{stockData.EPSEstimateCurrentYear}}</div>
-      <div class="col-xs-4"><strong>EPS Est. Next Yr.:</strong> {{stockData.EPSEstimateNextYear}}</div>
-      <div class="col-xs-4"><strong>1 Yr. Price Target:</strong> {{stockData.OneyrTargetPrice}}</div>
-    </div>
-    <div class="row">
-      <div class="col-xs-4">
-      <button type="submit" ng-click="tradeForm()" class="btn btn-success">Trade</button>
-      </div>
-    </div>
-
-  </div>
-
-  <hr> -->
-
-<!-- add stock, transaction form -->
-<!--   <div ng-show="trade" class="row add-form">
-
-    <form>
-      <div class="col-xs-2 form-group">
-        <label>Symbol</label>
-        <input type="text" class="form-control" id="symbol" ng-model="stockData.Symbol">
-      </div>
-      <div class="col-xs-2 form-group">
-        <label>Price</label>
-        <input type="text" class="form-control" id="price" ng-model="stockData.LastTradePriceOnly">
-      </div>
-      <div class="col-xs-2 form-group">
-        <label>Type</label>
-        <select class="form-control" ng-model="side">
-          <option>Buy</option>
-          <option>Sell</option>
-        </select>
-      </div>
-      <div class="col-xs-2 form-group">
-        <label>Share Amount</label>
-        <input type="number" class="form-control" id="shares" ng-model="shares" placeholder="Quantity">
-      </div>
-      <button type="submit" ng-click="addStock(stockData.Symbol)" class="btn btn-success">Submit Transaction</button>
-    </form>
-
-  </div> -->
-
-<!-- edit stock transaction form -->
-<!--    <div class="row edit-form">
-
-    <form>
-      <div class="col-xs-2 form-group">
-        <label>Symbol</label>
-        <input type="text" class="form-control" id="symbol" ng-model="stock.ticker">
-      </div>
-      <div class="col-xs-2 form-group">
-        <label>Price</label>
-        <input type="text" class="form-control" id="price" ng-model="stock.costBasis">
-      </div>
-      <div class="col-xs-2 form-group">
-        <label>Type</label>
-        <select class="form-control" ng-model="stock.side">
-          <option>Buy</option>
-          <option>Sell</option>
-        </select>
-      </div>
-      <div class="col-xs-2 form-group">
-        <label>Share Amount</label>
-        <input type="number" class="form-control" id="shares" ng-model="stock.shares" placeholder="Quantity">
-      </div>
-      <button type="submit" ng-click="updateStock(stock._id, stock)" class="btn btn-success">Edit Stock</button>
-    </form>
-
-  </div> -->
-<!--render portfolio holdings -->
-<!--   <label>Filter Positions:</label>
-  <input ng-model="searchText">
-  <span><strong>Sort Portfolio: </strong><select class="form-inline" ng-model="sort">
-    <option value='ticker'>Stock</option>
-    <option value='shares'>Position</option>
-    <option value='costBasis'>Cost Basis</option>
-    <option value='last'>Last</option>
-    <option value='initial'>Initial Value</option>
-    <option value='marketValue'>Market Value</option>
-    <option value='dollarPerformance'>$ Performance</option>
-    <option value='percentPerformance'>% Performance</option>
-    <option value='side'>Long/Short</option>
-    <option value='date'>Transaction Date</option>
-  </select>
-  <div class="bs-example" data-example-id="hoverable-table">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th>Stock</th>
-          <th>Position</th>
-          <th>Cost Basis</th>
-          <th>Last</th>
-          <th>Initial Value</th>
-          <th>Market Value</th>
-          <th>$ Performance</th>
-          <th>% Performance</th>
-          <th>Long/Short</th>
-          <th>Transaction Date</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="stock in portfolio | filter: searchText | orderBy : sort">
-          <td>{{stock.ticker}}</td>
-          <td>{{stock.shares}}</td>
-          <td>{{stock.costBasis | currency}}</td>
-          <td>{{stock.last | currency}}</td>
-          <td>{{stock.costBasis * stock.shares | currency}}</td>
-          <td>{{stock.last * stock.shares | currency}}</td>
-          <td><span ng-class="{'positive': stock.last * stock.shares - stock.costBasis * stock.shares > 0, 'negative':stock.last * stock.shares - stock.costBasis * stock.shares < 0}">{{stock.last * stock.shares - stock.costBasis * stock.shares | currency}}</span></td>
-          <td><span ng-class="{'positive':((stock.last * stock.shares)/(stock.costBasis * stock.shares)-1)*100 > 0, 'negative':((stock.last * stock.shares)/(stock.costBasis * stock.shares)-1)*100 < 0}">{{((stock.last * stock.shares)/(stock.costBasis * stock.shares)-1)*100 | number:1}}%</span></td>
-          <td>{{stock.side | side }}</td>
-          <td>{{stock.date | date: 'M/d/yy h:mm a'}}</td>
-          <td class="text-right">
-          <button ng-hide="name" ng-click="editStock(stock._id)" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></button>
-          <!<button ng-show="name" ng-click="updateStock(stock._id, stock)" class="btn btn-danger"><span class="glyphicon glyphicon-update"></span></button> -->
-          <!-- <button ng-click="deleteStock(stock._id)" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-      <p>Last Refresh : {{refresh | date : 'MMM d, y h:mm:ss a'}}</p>
-      <p>Cost Basis: {{ initialValue() | currency }}</p>
-      <p>Porftfolio Market Value: {{ portfolioMarketValue() | currency }}</p>
-      <p>Percent Performance: {{(portfolioMarketValue()/initialValue()-1)*100 | number:1}}%</p>
-      <p>Nominal Performance: <span ng-class="{'positive':portfolioMarketValue() - initialValue() > 0, 'negative':portfolioMarketValue() - initialValue() < 0}">{{portfolioMarketValue() - initialValue() | currency}}</span></p>
-
-
-
-
-      <button type="submit" ng-click="updateLast(); updatePortfolio()" class="btn btn-success">Refresh Prices</button>
-
-    <div class="jumbotron">
-
-    <div class="row">
-      <div class="col-sm-6 col-sm-offset-3">
-        <nvd3-line-chart
-          data="portfolioData"
-          xAxisTickFormat="xAxisTickFormatFunction()"
-          height="500"
-          width="800"
-          showXAxis="true"
-          showYAxis="true"
-          isArea="true"
-          useInteractiveGuideLine="true"
-          forcey="[65700,65900]">
-        <svg></svg>
-      </div>
-    </div>
-
-
-    </div> -->
-
-    <!-- <button type="submit" ng-click="updatePortfolio()" class="btn btn-success">Update Portfolio</button> -->
 
 
 
