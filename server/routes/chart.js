@@ -21,7 +21,6 @@ router.post('/portfolio', function (req, res, next) {
     value: req.body.value,
     date: req.body.date,
   });
-  console.log(newPortfolio, "new portfolio");
   newPortfolio.saveQ()
     .then(function (result) {
       res.json({"SUCCESS":result});

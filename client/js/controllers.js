@@ -5,6 +5,7 @@ app.controller('MainController', ['$scope', '$http', 'httpFactory', 'AuthService
       $scope.userName = '';
     } else {
       $scope.welcome = true;
+      getUser();
     }
   };
 
@@ -27,19 +28,16 @@ app.controller('MainController', ['$scope', '$http', 'httpFactory', 'AuthService
       .catch(function(){
         $scope.userError = "Error!";})
       .then(function(data){
-
         $scope.userName = data.data.username;
-        console.log($scope.userName, "username scope")
         $scope.userid = data.data._id;
         $scope.portfolioDBValue = data.data;
         getPortfolio('/users/' + $scope.userid + '/stocks');
-        displayName();
+
       });
   }
 
-  getUser();
 
-  console.log(AuthService.getUserStatus(),  "main controller");
+  displayName();
 
 
 
@@ -131,7 +129,7 @@ app.controller('MainController', ['$scope', '$http', 'httpFactory', 'AuthService
 
 }]);
 
-app.controller('PortfolioController', ['$scope', '$http', 'httpFactory' , function($scope, $http, httpFactory) {
+app.controller('PortfolioController', ['$scope', '$http', 'httpFactory','AuthService' , function($scope, $http, httpFactory, AuthService) {
 
    function displayName () {
     if(AuthService.getUserStatus() === false) {
@@ -139,7 +137,7 @@ app.controller('PortfolioController', ['$scope', '$http', 'httpFactory' , functi
     } else {
       $scope.welcome = true;
     }
-  };
+  }
 
 
 
@@ -169,15 +167,15 @@ app.controller('PortfolioController', ['$scope', '$http', 'httpFactory' , functi
       .catch(function(){
         $scope.error = "Error!";})
       .then(function(data){
-        displayName();
         $scope.userid = data.data._id;
         getPortfolio('/users/' + $scope.userid + '/stocks');
         getUserPortfolio('/users/' + $scope.userid + '/portfolios');
-        displayName();
+
       });
   }
 
   getUser();
+  displayName();
 
    $scope.editStock = function (id) {
     $scope.edit = true;
@@ -284,4 +282,3 @@ app.controller('PortfolioController', ['$scope', '$http', 'httpFactory' , functi
   };
 
 }]);
-

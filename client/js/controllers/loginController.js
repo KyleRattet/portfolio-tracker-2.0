@@ -2,7 +2,7 @@ app.controller('loginController',
   ['$scope', '$location', 'AuthService',
   function ($scope, $location, AuthService) {
 
-    console.log(AuthService.getUserStatus());
+
 
 
 
@@ -33,5 +33,4 @@ app.controller('loginController',
     };
 
 }]);
-
 

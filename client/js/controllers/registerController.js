@@ -1,3 +1,4 @@
+
 app.controller('registerController',
   ['$scope', '$location', 'AuthService',
   function ($scope, $location, AuthService) {

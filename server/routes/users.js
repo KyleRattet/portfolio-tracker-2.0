@@ -14,7 +14,6 @@ router.get('/', function(req, res, next){
   User.findQ({})
   .then(function(data){
     res.json(data);
-    console.log("get all users test")
   })
   .catch(function(err){
     res.send(err);
@@ -98,7 +97,6 @@ router.post('/:userid/stocks', function(req, res,next){
   newStock.save();
 
   var id = req.params.userid;
-  console.log(id, "current user id")
   var update = {$push : {stocks : newStock}};
   var options = {new : true};
 

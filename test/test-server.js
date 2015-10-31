@@ -254,13 +254,7 @@ describe('User', function() {
     .end(function(err, res) {
       res.should.have.status(200);
       res.should.be.json;
-      console.log(res.body);
-      // res.body.should.be.a('array');
-      // res.body[0].should.have.property('_id');
-      // res.body[0].should.have.property('value');
-      // res.body[0].should.have.property('date');
-      // res.body[0].value.should.equal(10000);
-      // res.body[0].date.should.equal(1443753358000);
+
       done();
     });
   });

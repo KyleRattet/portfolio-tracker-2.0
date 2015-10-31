@@ -24,3 +24,5 @@ var Portfolio = new Schema ({
 });
 
 module.exports = mongoose.model('portfolios', Portfolio);
+
+// mongoose.connect(process.env.MONGOLAB_URI || "mongodb://localhost/portfolios");

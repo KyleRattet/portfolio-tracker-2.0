@@ -32,3 +32,5 @@ var Stock = new Schema ({
 });
 
 module.exports = mongoose.model('stocks', Stock);
+
+// mongoose.connect(process.env.MONGOLAB_URI || "mongodb://localhost/stocks");
