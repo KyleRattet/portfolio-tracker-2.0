@@ -10,7 +10,7 @@ var Stock = require('../models/stocks.js');
 
 
 router.post('/register', function(req, res) {
-  console.log('hi')
+
   User.register(new User({ username: req.body.username }), req.body.password, function(err, account) {
     console.log(err, "err log");
     if (err) {
@@ -35,7 +35,6 @@ router.post('/login', function(req, res, next) {
       if (err) {
         return res.status(500).json({err: 'Could not log in user'});
       }
-      //new
       req.session.user = user;
       res.status(200).json({
         status: 'Login successful!',
