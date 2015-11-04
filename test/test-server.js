@@ -14,9 +14,9 @@ chai.use(chaiHttp);
 
 
 
-xdescribe('Stock', function() {
+describe('Stock', function() {
 
-//SETUP HOOKS TO CREATE PURE TESTING ENVIRONMENT
+
   Stock.collection.drop();
 
   beforeEach(function(done){
@@ -171,9 +171,9 @@ xdescribe('Stock', function() {
 
 });
 
-xdescribe('Portfolio', function() {
+describe('Portfolio', function() {
 
-//SETUP HOOKS TO CREATE PURE TESTING ENVIRONMENT
+
   Portfolio.collection.drop();
 
   beforeEach(function(done){
@@ -206,7 +206,7 @@ xdescribe('Portfolio', function() {
     });
   });
 
-//2. POST Test
+
   it('should add a SINGLE portfolio on /portfolio POST', function(done) {
   chai.request(server)
     .post('/chart/portfolio')
@@ -230,7 +230,6 @@ xdescribe('Portfolio', function() {
 
 describe('User', function() {
 
-//SETUP HOOKS TO CREATE PURE TESTING ENVIRONMENT
   User.collection.drop();
 
   beforeEach(function(done){
